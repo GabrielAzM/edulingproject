@@ -1,0 +1,31 @@
+{
+  "titulo": "UNO Camble - Quem chega perto vence",
+  "rodadasPadrao": 6,
+  "maxTrocasPorJogador": 1,
+  "cartas": [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+  ],
+  "dicionarioNumeros": {
+    "0": "MOO",
+    "1": "UNE",
+    "2": "TO",
+    "3": "WIQIS",
+    "4": "WOO",
+    "5": "EPITA",
+    "6": "TOWIQIS",
+    "7": "OQITEE",
+    "8": "EEŊEEA",
+    "9": "PAAŊ"
+  },
+  "regrasResumo": [
+    "Antes da partida, os jogadores preenchem a ficha dos números de 0 a 9 com as palavras em camble que serão usadas nas cartas.",
+    "O baralho tem 40 cartas: quatro cartas de cada número, de 0 a 9.",
+    "No início de cada rodada, a mesa sorteia 3 cartas e monta uma sequência de três dígitos que vira o número-alvo.",
+    "Cada jogador recebe 3 cartas e pode trocar no máximo 1 carta por outra do monte, sem vê-la antes.",
+    "Com as 3 cartas, cada jogador monta a sequência mais próxima possível do número da mesa e registra o número por extenso em camble na ficha de anotação.",
+    "Quem ficar mais próximo do número da mesa vence a rodada."
+  ]
+}

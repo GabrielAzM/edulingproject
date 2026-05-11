@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Camble Kids - Plataforma de Jogos</title>
+  <link rel="icon" href="./assets/imagens/ufscar-favicon.ico?v=3" type="image/x-icon">
+  <link rel="shortcut icon" href="./assets/imagens/ufscar-favicon.ico?v=3" type="image/x-icon">
+  <link rel="stylesheet" href="styles.css?v=35">
+</head>
+<body data-active-screen="intro">
+  <div class="space-bg" aria-hidden="true">
+    <div class="story-grid sg1">
+      <span class="story-cell cell-1"></span>
+      <span class="story-cell cell-7"></span>
+      <span class="story-cell cell-2"></span>
+      <span class="story-cell cell-8"></span>
+      <span class="story-cell cell-5"></span>
+      <span class="story-cell cell-9"></span>
+    </div>
+    <div class="story-grid sg2">
+      <span class="story-cell cell-3"></span>
+      <span class="story-cell cell-10"></span>
+      <span class="story-cell cell-4"></span>
+      <span class="story-cell cell-11"></span>
+      <span class="story-cell cell-6"></span>
+      <span class="story-cell cell-12"></span>
+    </div>
+    <div class="story-grid sg3">
+      <span class="story-cell cell-8"></span>
+      <span class="story-cell cell-2"></span>
+      <span class="story-cell cell-9"></span>
+      <span class="story-cell cell-5"></span>
+      <span class="story-cell cell-10"></span>
+      <span class="story-cell cell-1"></span>
+    </div>
+    <div class="story-grid sg4">
+      <span class="story-cell cell-6"></span>
+      <span class="story-cell cell-12"></span>
+      <span class="story-cell cell-4"></span>
+      <span class="story-cell cell-11"></span>
+      <span class="story-cell cell-3"></span>
+      <span class="story-cell cell-7"></span>
+    </div>
+    <div class="story-grid sg5">
+      <span class="story-cell cell-9"></span>
+      <span class="story-cell cell-3"></span>
+      <span class="story-cell cell-8"></span>
+      <span class="story-cell cell-6"></span>
+      <span class="story-cell cell-10"></span>
+      <span class="story-cell cell-4"></span>
+    </div>
+    <div class="story-grid sg6">
+      <span class="story-cell cell-11"></span>
+      <span class="story-cell cell-5"></span>
+      <span class="story-cell cell-12"></span>
+      <span class="story-cell cell-2"></span>
+      <span class="story-cell cell-7"></span>
+      <span class="story-cell cell-1"></span>
+    </div>
+    <span class="planet p1"></span>
+    <span class="planet p2"></span>
+    <span class="planet p3"></span>
+    <span class="star s1"></span>
+    <span class="star s2"></span>
+    <span class="star s3"></span>
+    <span class="doc-float df1"></span>
+    <span class="doc-float df2"></span>
+    <span class="doc-float df3"></span>
+    <span class="doc-float df4"></span>
+    <span class="doc-float df5"></span>
+    <span class="doc-float df6"></span>
+    <span class="doc-float df7"></span>
+    <span class="doc-float df8"></span>
+    <span class="doc-float df9"></span>
+    <span class="doc-float df10"></span>
+    <span class="doc-float df11"></span>
+    <span class="doc-float df12"></span>
+  </div>
+
+  <header class="global-header">
+    <div class="logo-wrap">
+      <img class="brand-logo" src="./assets/imagens/logo-2-sem-slogan.png?v=3" alt="Logo Educação Linguística">
+      <div class="brand-text">
+        <h1>Camble Kids</h1>
+        <p>Jogos de linguagem para pequenos exploradores.</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button id="btn-home" class="btn btn-outline">Início</button>
+    </div>
+  </header>
+
+  <aside class="game-quick-nav" aria-label="Controles do jogo">
+    <button id="btn-game-home" class="btn btn-outline" type="button">Início</button>
+    <button id="btn-game-config" class="btn btn-secondary" type="button">Configurações</button>
+  </aside>
+
+  <main class="app">
+    <section id="tela-intro" class="screen active" data-screen="intro">
+      <article class="intro-hero">
+        <div class="intro-copy">
+          <span class="intro-kicker">Missão Siriws apresenta</span>
+          <h2>Uma galáxia para aprender palavras brincando</h2>
+          <p>
+            Entre na nave do Camble Kids!
+          </p>
+          <div class="intro-actions">
+            <button class="btn btn-secondary intro-cta" data-open-screen="home">Explorar Jogos</button>
+          </div>
+          <div class="intro-badges">
+            <span>Missões educativas</span>
+          </div>
+        </div>
+
+        <div class="intro-stage" aria-label="Paisagem cartunesca do Planeta Camble">
+          <div class="intro-stage-ribbon">Planeta Camble</div>
+          <div class="intro-stage-sun" aria-hidden="true"></div>
+          <div class="intro-stage-ring" aria-hidden="true"></div>
+          <div class="intro-stage-planet" aria-hidden="true"></div>
+          <div class="intro-stage-moon" aria-hidden="true"></div>
+          <div class="intro-stage-cloud cloud-a" aria-hidden="true"></div>
+          <div class="intro-stage-cloud cloud-b" aria-hidden="true"></div>
+          <div class="intro-stage-trail" aria-hidden="true"></div>
+          <div class="intro-stage-rocket" aria-hidden="true">
+            <span class="rocket-window"></span>
+            <span class="rocket-fin fin-left"></span>
+            <span class="rocket-fin fin-right"></span>
+            <span class="rocket-flame"></span>
+          </div>
+          <article class="intro-sticker sticker-memory">Memória</article>
+          <article class="intro-sticker sticker-domino">Dominó</article>
+          <article class="intro-sticker sticker-uno">UNO</article>
+          <article class="intro-sticker sticker-cambleplay">Cambleplay</article>
+        </div>
+      </article>
+
+      <section class="intro-panels">
+        <article class="intro-panel tone-sky">
+          <h3>Descobrir</h3>
+          <p>Explore cartas, peças e perguntas em uma viagem cheia de cores e missões.</p>
+        </article>
+        <article class="intro-panel tone-mint">
+          <h3>Jogar Junto</h3>
+          <p>Monte equipes, jogue em grupo local ou convide bots para completar a tripulação.</p>
+        </article>
+        <article class="intro-panel tone-sun">
+          <h3>Aprender Brincando</h3>
+          <p>Treine vocabulário, associações e raciocínio em desafios curtos e divertidos.</p>
+        </article>
+      </section>
+    </section>
+
+    <section id="tela-home" class="screen" data-screen="home">
+      <section class="games-grid">
+        <article class="game-card tone-memory">
+          <span class="game-card-kicker">Missão de pares</span>
+          <img src="assets/imagens/icon-memoria-camble.png" alt="Cartas do Jogo da Memória Camble">
+          <h3>Memória Camble</h3>
+          <p>Associe imagens, verbos e palavras em camble para formar os pares.</p>
+          <div class="tags">
+            <span>Solo</span>
+            <span>Grupo</span>
+          </div>
+          <button class="btn btn-primary" data-open-game="memoria">Jogar</button>
+        </article>
+
+        <article class="game-card tone-domino">
+          <span class="game-card-kicker">Missão de conexões</span>
+          <img src="assets/imagens/icon-domino-camble.png" alt="Peças do Dominó Camble">
+          <h3>Dominó Camble Educativo</h3>
+          <p>Conecte associações visuais e palavras em camble para aprender enquanto joga.</p>
+          <div class="tags">
+            <span>Solo</span>
+            <span>Grupo</span>
+          </div>
+          <button class="btn btn-primary" data-open-game="domino">Jogar</button>
+        </article>
+
+        <article class="game-card tone-uno">
+          <span class="game-card-kicker">Missão numérica</span>
+          <img src="assets/imagens/icon-uno-camble.png" alt="Cartas do UNO Camble">
+          <h3>UNO Camble</h3>
+          <p>Monte o número mais próximo do alvo e ganhe a rodada.</p>
+          <div class="tags">
+            <span>Solo</span>
+            <span>Grupo</span>
+          </div>
+          <button class="btn btn-primary" data-open-game="uno">Jogar</button>
+        </article>
+
+        <article class="game-card tone-cambleplay">
+          <span class="game-card-kicker">Missão no tabuleiro</span>
+          <img src="assets/imagens/icon-cambleplay.png" alt="Tabuleiro do Cambleplay">
+          <h3>Cambleplay</h3>
+          <p>Role o dado, cumpra missões e conserte a nave.</p>
+          <div class="tags">
+            <span>Solo</span>
+            <span>Grupo</span>
+          </div>
+          <button class="btn btn-primary" data-open-game="cambleplay">Jogar</button>
+        </article>
+      </section>
+    </section>
+
+    <section id="tela-memoria" class="screen" data-screen="memoria">
+      <div class="screen-head">
+        <h2>Memória Camble</h2>
+        <button class="btn btn-outline" data-back-home>Voltar aos Jogos</button>
+      </div>
+
+      <dialog id="modal-config-memoria" class="modal modal-game-config">
+        <h3>Configurações - Memória Camble</h3>
+        <div class="config-grid">
+          <label>
+            Modo
+            <select id="memoria-modo">
+              <option value="solo">Solo com bots</option>
+              <option value="grupo">Grupo local</option>
+            </select>
+          </label>
+          <label>
+            Jogadores totais
+            <select id="memoria-jogadores">
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </label>
+          <label>
+            Tipo do baralho
+            <select id="memoria-tipo">
+              <option value="misto">Verbos + associações</option>
+              <option value="verbos">Somente verbos</option>
+              <option value="associacoes">Somente associações</option>
+            </select>
+          </label>
+          <label>
+            Nível
+            <select id="memoria-nivel">
+              <option value="facil">Fácil</option>
+              <option value="medio" selected>Médio</option>
+              <option value="dificil">Difícil</option>
+            </select>
+          </label>
+          <button id="memoria-iniciar" class="btn btn-primary">Iniciar Partida</button>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-outline" type="button" data-close-config>Fechar</button>
+        </div>
+      </dialog>
+
+      <div class="game-shell memory-shell">
+        <section class="game-main memory-main">
+          <div id="memoria-tabuleiro" class="memory-board"></div>
+        </section>
+
+        <aside class="game-dashboard memory-dashboard">
+          <div id="memoria-status" class="status-bar">
+            <div><strong>Turno:</strong> <span id="memoria-turno">-</span></div>
+            <div><strong>Movimentos:</strong> <span id="memoria-movimentos">0</span></div>
+            <div><strong>Tempo:</strong> <span id="memoria-tempo">00:00</span></div>
+          </div>
+
+          <div id="memoria-placar" class="scoreboard"></div>
+          <p id="memoria-msg" class="message">Configure e clique em iniciar.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="tela-domino" class="screen" data-screen="domino">
+      <div class="screen-head">
+        <h2>Dominó Camble Educativo</h2>
+        <button class="btn btn-outline" data-back-home>Voltar aos Jogos</button>
+      </div>
+
+      <dialog id="modal-config-domino" class="modal modal-game-config">
+        <h3>Configurações - Dominó Camble</h3>
+        <div class="config-grid">
+          <label>
+            Modo
+            <select id="domino-modo">
+              <option value="solo">Solo com bots</option>
+              <option value="grupo">Grupo local</option>
+            </select>
+          </label>
+          <label>
+            Jogadores totais
+            <select id="domino-jogadores">
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </label>
+          <label>
+            Nível
+            <select id="domino-nivel">
+              <option value="facil">Fácil</option>
+              <option value="medio" selected>Médio</option>
+              <option value="dificil">Difícil</option>
+            </select>
+          </label>
+          <button id="domino-iniciar" class="btn btn-primary">Iniciar Partida</button>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-outline" type="button" data-close-config>Fechar</button>
+        </div>
+      </dialog>
+
+      <div class="game-shell domino-shell">
+        <section class="game-main domino-main-column">
+          <div class="domino-layout">
+            <section class="domino-main">
+              <h3 class="domino-title">Mesa de Dominó</h3>
+              <div id="domino-board" class="domino-board"></div>
+            </section>
+            <aside class="domino-side">
+              <h3 class="domino-title">Mão do Jogador da Vez</h3>
+              <div id="domino-mao" class="domino-hand"></div>
+            </aside>
+          </div>
+        </section>
+
+        <aside class="game-dashboard domino-dashboard">
+          <div id="domino-status" class="status-bar">
+            <div><strong>Turno:</strong> <span id="domino-turno">-</span></div>
+            <div><strong>Peças na mão:</strong> <span id="domino-restantes">0</span></div>
+            <div><strong>Mesa:</strong> <span id="domino-extremos">-</span></div>
+          </div>
+
+          <div id="domino-placar" class="scoreboard"></div>
+          <p id="domino-msg" class="message">Inicie a partida para distribuir as peças.</p>
+          <div id="domino-acoes" class="domino-actions"></div>
+          <div id="domino-log" class="log-box"></div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="tela-uno" class="screen" data-screen="uno">
+      <div class="screen-head">
+        <h2>UNO Camble</h2>
+        <button class="btn btn-outline" data-back-home>Voltar aos Jogos</button>
+      </div>
+
+      <dialog id="modal-config-uno" class="modal modal-game-config">
+        <h3>Configurações - UNO Camble</h3>
+        <div class="config-grid">
+          <label>
+            Modo
+            <select id="uno-modo">
+              <option value="solo">Solo com bots</option>
+              <option value="grupo">Grupo local</option>
+            </select>
+          </label>
+          <label>
+            Jogadores totais
+            <select id="uno-jogadores">
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </label>
+          <label>
+            Rodadas
+            <select id="uno-rodadas">
+              <option value="4">4</option>
+              <option value="6" selected>6</option>
+              <option value="8">8</option>
+            </select>
+          </label>
+          <button id="uno-iniciar" class="btn btn-primary">Iniciar Partida</button>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-outline" type="button" data-close-config>Fechar</button>
+        </div>
+      </dialog>
+
+      <div class="game-shell uno-shell">
+        <section class="game-main uno-main">
+          <div id="uno-jogada" class="uno-action"></div>
+        </section>
+
+        <aside class="game-dashboard uno-dashboard">
+          <div id="uno-status" class="status-bar">
+            <div><strong>Rodada:</strong> <span id="uno-rodada">0/0</span></div>
+            <div><strong>Alvo:</strong> <span id="uno-alvo">---</span></div>
+            <div><strong>Vez:</strong> <span id="uno-vez">-</span></div>
+          </div>
+
+          <div id="uno-placar" class="scoreboard"></div>
+          <div id="uno-ficha" class="uno-sheet"></div>
+          <div id="uno-log" class="log-box"></div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="tela-cambleplay" class="screen" data-screen="cambleplay">
+      <div class="screen-head">
+        <h2>Cambleplay</h2>
+        <button class="btn btn-outline" data-back-home>Voltar aos Jogos</button>
+      </div>
+
+      <dialog id="modal-config-cambleplay" class="modal modal-game-config">
+        <h3>Configurações - Cambleplay</h3>
+        <div class="config-grid cp-config-grid">
+          <label>
+            Modo
+            <select id="cp-modo">
+              <option value="solo">Solo com bots</option>
+              <option value="grupo">Grupo local</option>
+            </select>
+          </label>
+          <label>
+            Jogadores totais
+            <select id="cp-jogadores">
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+          </label>
+          <label>
+            Meta de peças
+            <select id="cp-meta">
+              <option value="20">20</option>
+              <option value="30">30</option>
+            </select>
+          </label>
+          <button id="cp-iniciar" class="btn btn-primary">Iniciar Partida</button>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-outline" type="button" data-close-config>Fechar</button>
+        </div>
+      </dialog>
+
+      <div class="game-shell cp-shell">
+        <div class="cp-control-stack">
+        <aside class="game-dashboard cp-dashboard">
+          <div id="cp-status-bar" class="status-bar">
+        <div><strong>Vez:</strong> <span id="cp-turno">-</span></div>
+        <div><strong>Dado:</strong> <span id="cp-dado">-</span></div>
+        <button id="cp-rolar" class="btn btn-secondary">Rolar Dado</button>
+      </div>
+
+          <div id="cp-placar" class="scoreboard"></div>
+        </aside>
+
+        </div>
+
+        <section class="game-main cp-main">
+          <div class="cp-layout">
+        <section class="cp-stage">
+          <div id="cp-board" class="cp-board"></div>
+        </section>
+
+        <aside class="cp-side-panel">
+          <section id="cp-status-hero" class="cp-status-hero">
+        <div class="cp-status-icon" aria-hidden="true">🎯</div>
+        <div>
+          <strong>Objetivo da vez</strong>
+          <p>Acompanhe aqui quantas peças e casas ainda faltam para vencer.</p>
+        </div>
+          </section>
+
+          <div id="cp-acao" class="cp-action"></div>
+
+          <div class="cp-side-top">
+            <div class="cp-side-decks">
+              <article class="cp-deck-panel">
+                <h4>CAMBLE EM AÇÃO</h4>
+                <div class="cp-card-back cp-card-cea">CAMBLE<br>EM AÇÃO</div>
+              </article>
+
+              <article class="cp-deck-panel">
+                <h4>PERGUNTAS</h4>
+                <div class="cp-card-back cp-card-pergunta">PERGUNTAS</div>
+              </article>
+
+              <article class="cp-deck-panel">
+                <h4>SORTE OU AZAR</h4>
+                <div class="cp-card-back cp-card-sa">SORTE<br>OU<br>AZAR</div>
+              </article>
+            </div>
+
+            <article id="cp-chat-panel" class="cp-chat-panel">
+              <h4>Jogadas</h4>
+              <div id="cp-log" class="cp-chat-log"></div>
+            </article>
+          </div>
+
+          <article class="cp-piece-monte">
+            <div class="cp-piece-header">MONTE DE PEÇAS</div>
+            <div class="cp-piece-body">
+              <img src="assets/imagens/peca-engrenagem.svg" alt="Peça engrenagem">
+              <span id="cp-piece-total">x0</span>
+            </div>
+          </article>
+
+          <article id="cp-card-front" class="cp-card-front">
+            <h4>Última carta</h4>
+            <p>Nenhuma carta revelada ainda.</p>
+          </article>
+        </aside>
+      </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <aside id="mobile-assist" class="mobile-assist" hidden>
+    <button
+      id="mobile-assist-toggle"
+      class="mobile-assist-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="mobile-assist-body"
+    >
+      <span class="mobile-assist-label">Abrir painel do jogo</span>
+      <span id="mobile-assist-summary" class="mobile-assist-summary">Toque para abrir</span>
+    </button>
+    <div id="mobile-assist-body" class="mobile-assist-body" hidden>
+      <div id="mobile-assist-content" class="mobile-assist-content"></div>
+    </div>
+  </aside>
+
+  <dialog id="modal-feedback" class="modal">
+    <h3 id="modal-feedback-titulo">Resultado</h3>
+    <div id="modal-feedback-texto" class="modal-content"></div>
+    <div class="modal-actions">
+      <button id="modal-feedback-ok" class="btn btn-primary">Continuar</button>
+      <button id="modal-feedback-home" class="btn btn-outline">Início</button>
+    </div>
+  </dialog>
+
+  <dialog id="modal-domino-pass" class="modal modal-pass-turn">
+    <div class="pass-turn-card">
+      <div class="pass-turn-icon" aria-hidden="true">🀄</div>
+      <h3 id="modal-domino-pass-title">Passe o aparelho</h3>
+      <div id="modal-domino-pass-texto" class="modal-content"></div>
+      <div class="modal-actions">
+        <button id="modal-domino-pass-ok" class="btn btn-primary">Entregar ao próximo jogador</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div id="confete" class="confetti-wrap" aria-hidden="true"></div>
+
+  <script src="data/embedded-data.js?v=5"></script>
+  <script src="app.js?v=22"></script>
+</body>
+</html>

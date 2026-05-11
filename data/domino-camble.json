@@ -1,0 +1,45 @@
+{
+  "titulo": "Dominó Camble Educativo",
+  "niveis": {
+    "facil": 8,
+    "medio": 12,
+    "dificil": 16
+  },
+  "cartas": [
+    { "id": "d1a", "tipo": "associacao", "valor": "\ud83c\udf33\nÁrvore", "parId": "substantivo_arvore" },
+    { "id": "d1b", "tipo": "palavra", "valor": "LI\u166aES+EE", "parId": "substantivo_arvore" },
+
+    { "id": "d2a", "tipo": "associacao", "valor": "\ud83c\udf43\nFolha", "parId": "substantivo_folha" },
+    { "id": "d2b", "tipo": "palavra", "valor": "ATSIA\u014a", "parId": "substantivo_folha" },
+
+    { "id": "d3a", "tipo": "associacao", "valor": "\ud83c\udf0a\nRio", "parId": "substantivo_rio" },
+    { "id": "d3b", "tipo": "palavra", "valor": "QOOQLIFI", "parId": "substantivo_rio" },
+
+    { "id": "d4a", "tipo": "associacao", "valor": "\u2699\ufe0f\nMáquina", "parId": "substantivo_maquina" },
+    { "id": "d4b", "tipo": "palavra", "valor": "JJAQOWA", "parId": "substantivo_maquina" },
+
+    { "id": "d5a", "tipo": "associacao", "valor": "\ud83d\udc51\nRainha", "parId": "substantivo_rainha" },
+    { "id": "d5b", "tipo": "palavra", "valor": "QIQWI\u014a", "parId": "substantivo_rainha" },
+
+    { "id": "d6a", "tipo": "associacao", "valor": "\ud83d\udccf\nMetro", "parId": "substantivo_metro" },
+    { "id": "d6b", "tipo": "palavra", "valor": "\u15ebRA", "parId": "substantivo_metro" },
+
+    { "id": "d7a", "tipo": "associacao", "valor": "\ud83d\udcda\nSabedoria", "parId": "conceito_sabedoria" },
+    { "id": "d7b", "tipo": "palavra", "valor": "I\u014a\u0537ELEQ\u0537WS", "parId": "conceito_sabedoria" },
+
+    { "id": "d8a", "tipo": "associacao", "valor": "\u26a1\nPoder", "parId": "conceito_poder" },
+    { "id": "d8b", "tipo": "palavra", "valor": "SWPEER", "parId": "conceito_poder" },
+
+    { "id": "d9a", "tipo": "associacao", "valor": "0\ufe0f\u20e3\nZero", "parId": "numero_zero" },
+    { "id": "d9b", "tipo": "palavra", "valor": "MOO", "parId": "numero_zero" },
+
+    { "id": "d10a", "tipo": "associacao", "valor": "1\ufe0f\u20e3\nUm", "parId": "numero_um" },
+    { "id": "d10b", "tipo": "palavra", "valor": "UNE", "parId": "numero_um" },
+
+    { "id": "d11a", "tipo": "associacao", "valor": "2\ufe0f\u20e3\nDois", "parId": "numero_dois" },
+    { "id": "d11b", "tipo": "palavra", "valor": "TO", "parId": "numero_dois" },
+
+    { "id": "d12a", "tipo": "associacao", "valor": "3\ufe0f\u20e3\nTrês", "parId": "numero_tres" },
+    { "id": "d12b", "tipo": "palavra", "valor": "WIQIS", "parId": "numero_tres" }
+  ]
+}

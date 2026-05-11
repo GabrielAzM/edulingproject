@@ -1,0 +1,19 @@
+{
+  "regras": {
+    "home": "Escolha um jogo nos cards abaixo. Todos os jogos suportam solo com bots ou grupo local.",
+    "memoria": "Vire duas cartas por vez para encontrar pares de verbos e associações visuais em camble. Em grupo, os jogadores se revezam no mesmo dispositivo. Em solo, os bots fazem jogadas automáticas.",
+    "domino": "Cada jogador recebe peças iniciais e joga por turnos. O Jogador 1 abre a mesa se tiver a peça com a associação inicial; se não tiver, passa a vez. Depois, encaixe peças nas extremidades da mesa combinando associações visuais e palavras em camble. Sem jogada válida, compre no monte (quando houver) ou passe. Vence quem ficar sem peças na mão.",
+    "uno": "Preencha a ficha dos números de 0 a 9 em camble. Em cada rodada, a mesa sorteia 3 cartas e monta o número-alvo. Cada jogador recebe 3 cartas, pode trocar no máximo 1 sem ver a nova carta e monta a sequência mais próxima do alvo.",
+    "cambleplay": "Role o dado, avance e cumpra a tarefa da casa. Ganhe peças para consertar a nave. Para vencer, alcance a chegada com pelo menos a meta de peças escolhida."
+  },
+  "mensagens": {
+    "carregando": "Carregando dados dos jogos...",
+    "erroDados": "Não foi possível carregar os dados. Confira se a pasta data está junto do index.html.",
+    "vitoria": "Parabéns! Você venceu!",
+    "empate": "Empate! Todos jogaram muito bem!"
+  },
+  "jogadores": {
+    "humano": "Jogador",
+    "bot": "Bot"
+  }
+}

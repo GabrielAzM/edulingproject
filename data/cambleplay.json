@@ -1,0 +1,175 @@
+{
+  "titulo": "Cambleplay",
+  "config": {
+    "vitoriaOpcoes": [20, 30],
+    "pecasIniciais": 5,
+    "tempoCEA": 30
+  },
+  "tabuleiro": [
+    "INICIO",
+    "+1", "S/A", "VPA", "S/A", "VC", "?", "ADJ", "CEA",
+    "+1", "S/A", "VF", "S/A", "VC", "?", "ADJ", "CEA",
+    "+1", "S/A", "VPR", "S/A", "VC", "?", "ADJ", "CEA",
+    "+1", "S/A", "VF", "S/A", "VC", "?", "ADJ", "CEA",
+    "CHEGADA"
+  ],
+  "contagemCamble": [
+    "UNE",
+    "TO",
+    "WIQIS",
+    "WOO",
+    "EPITA",
+    "TOWIQIS",
+    "OQITEE",
+    "EEŊEEA",
+    "PAAŊ",
+    "MOO"
+  ],
+  "sorteAzar": [
+    { "id": "sa1", "texto": "Você encontrou uma ferramenta perto da árvore gigante.", "efeito": { "pecas": 2, "casas": 0 } },
+    { "id": "sa2", "texto": "Você descobriu um verbo novo em camble na biblioteca.", "efeito": { "pecas": 1, "casas": 0 } },
+    { "id": "sa3", "texto": "IAN ajudou com um cálculo importante para o conserto.", "efeito": { "pecas": 3, "casas": 0 } },
+    { "id": "sa4", "texto": "Você achou um atalho para o laboratório.", "efeito": { "pecas": 1, "casas": 2 } },
+    { "id": "sa5", "texto": "Você respondeu corretamente a uma pergunta sobre camble.", "efeito": { "pecas": 4, "casas": 0 } },
+    { "id": "sa6", "texto": "Uma ferramenta quebrou durante o transporte.", "efeito": { "pecas": -2, "casas": 0 } },
+    { "id": "sa7", "texto": "Tempestade espacial te fez perder o caminho.", "efeito": { "pecas": 0, "casas": -3 } },
+    { "id": "sa8", "texto": "IAN travou e não ajudou na tradução.", "efeito": { "pecas": -2, "casas": 0 } },
+    { "id": "sa9", "texto": "Você esqueceu como dizer máquina em camble.", "efeito": { "pecas": -2, "casas": 0 } },
+    { "id": "sa10", "texto": "IAN atualizou o sistema e apagou anotações.", "efeito": { "pecas": -1, "casas": 0 } }
+  ],
+  "perguntas": [
+    {
+      "id": "q1",
+      "pergunta": "Qual é a diferença entre grafema e fonema?",
+      "opcoes": ["Grafema é som; fonema é letra", "Grafema é letra; fonema é som", "Os dois são iguais"],
+      "resposta": 1
+    },
+    {
+      "id": "q2",
+      "pergunta": "Qual era a profissão de Caio?",
+      "opcoes": ["Linguista", "Químico", "Físico", "Antropólogo"],
+      "resposta": 0
+    },
+    {
+      "id": "q3",
+      "pergunta": "O que danificou a nave?",
+      "opcoes": ["Um asteroide", "Um raio", "Um robô"],
+      "resposta": 0
+    },
+    {
+      "id": "q4",
+      "pergunta": "Onde estava o mapa para o laboratório?",
+      "opcoes": ["Na grande árvore", "No cofre", "No diário"],
+      "resposta": 0
+    },
+    {
+      "id": "q5",
+      "pergunta": "Qual o nome da rainha dos cambledores?",
+      "opcoes": ["QAŊ", "JJAŊ", "PAAŊ", "WAAŊ"],
+      "resposta": 1
+    },
+    {
+      "id": "q6",
+      "pergunta": "Qual é a ordem de pergunta em camble?",
+      "opcoes": ["Sujeito - Objeto - Verbo", "Verbo - Sujeito - Objeto", "Objeto - Verbo - Sujeito"],
+      "resposta": 0
+    },
+    {
+      "id": "q7",
+      "pergunta": "Como marcar passado e futuro em camble?",
+      "opcoes": ["PA antes é passado e PA depois é futuro", "PA sempre depois é passado", "Não usa marcador"],
+      "resposta": 0
+    },
+    {
+      "id": "q8",
+      "pergunta": "Qual é a língua do povo encontrado?",
+      "opcoes": ["Camble", "Português", "Latim"],
+      "resposta": 0
+    },
+    {
+      "id": "q9",
+      "pergunta": "Qual palavra representa vermelho em camble?",
+      "opcoes": ["ISQAI", "SWᙪIMAR", "ᙪLOOŊ", "ԷWRWQI"],
+      "resposta": 2
+    },
+    {
+      "id": "q10",
+      "pergunta": "Qual som faz o grafema Q em camble?",
+      "opcoes": ["Som de K", "Som de T", "Som de Z"],
+      "resposta": 0
+    },
+    {
+      "id": "q11",
+      "pergunta": "Em camble, qual opção mostra verbo no futuro?",
+      "opcoes": ["GAREES+EE", "GAREES+EE PA", "PA GAREES+EE"],
+      "resposta": 1
+    },
+    {
+      "id": "q12",
+      "pergunta": "Como se escreve máquina em camble?",
+      "opcoes": ["SEERA", "JJAQOWA", "VEER", "QRA"],
+      "resposta": 1
+    },
+    {
+      "id": "q13",
+      "pergunta": "A senha para a porta do subterrâneo é composta por quais cores?",
+      "opcoes": ["Primárias", "Secundárias", "Terciárias", "Neutras"],
+      "resposta": 1
+    },
+    {
+      "id": "q14",
+      "pergunta": "Qual frase está no modo imperativo?",
+      "opcoes": ["Eles saíram do laboratório.", "Entrem agora!", "A nave está parada."],
+      "resposta": 1
+    },
+    {
+      "id": "q15",
+      "pergunta": "Qual opção é pronome?",
+      "opcoes": ["Feliz", "Ele", "Casa", "Correr"],
+      "resposta": 1
+    },
+    {
+      "id": "q16",
+      "pergunta": "Qual o significado da sigla IAN?",
+      "opcoes": ["Inteligência Artificial Neural", "Integração Astral Natural", "Idioma Artificial Novo"],
+      "resposta": 0
+    },
+    {
+      "id": "q17",
+      "pergunta": "Qual parte da nave quebrou?",
+      "opcoes": ["A porta", "A asa", "A cabine", "O motor"],
+      "resposta": 1
+    },
+    {
+      "id": "q18",
+      "pergunta": "Onde a senha para o cofre foi encontrada?",
+      "opcoes": ["No diário", "Na biblioteca", "No castelo"],
+      "resposta": 0
+    }
+  ],
+  "cambleEmAcao": [
+    { "id": "cea1", "verboCamble": "LIRWŊA", "traducao": "ANDAR" },
+    { "id": "cea2", "verboCamble": "MEQOO", "traducao": "COMER" },
+    { "id": "cea3", "verboCamble": "ᙪROOWQ", "traducao": "QUEBRAR/DESTRUIR" },
+    { "id": "cea4", "verboCamble": "IGIԷEE", "traducao": "CRESCER" },
+    { "id": "cea5", "verboCamble": "ISPARQI", "traducao": "BRILHAR" },
+    { "id": "cea6", "verboCamble": "WRITSEE", "traducao": "ESCREVER" },
+    { "id": "cea7", "verboCamble": "LIVEE", "traducao": "VIVER" },
+    { "id": "cea8", "verboCamble": "QLOOWS+EE", "traducao": "FECHAR" },
+    { "id": "cea9", "verboCamble": "ISԷOOPOOSZI", "traducao": "PARAR" },
+    { "id": "cea10", "verboCamble": "BWARQI", "traducao": "CONSTRUIR" },
+    { "id": "cea11", "verboCamble": "FOOW", "traducao": "CAIR" },
+    { "id": "cea12", "verboCamble": "MARI", "traducao": "AMAR" },
+    { "id": "cea13", "verboCamble": "SWGLI", "traducao": "ESQUENTAR" },
+    { "id": "cea14", "verboCamble": "AGWA", "traducao": "ESPERAR" },
+    { "id": "cea15", "verboCamble": "EES+I", "traducao": "SAIR" },
+    { "id": "cea16", "verboCamble": "WOQI", "traducao": "TRABALHAR" },
+    { "id": "cea17", "verboCamble": "PEELEEI", "traducao": "LIGAR" },
+    { "id": "cea18", "verboCamble": "DRWPLA", "traducao": "SONHAR" }
+  ],
+  "validacaoBasica": {
+    "adjetivos": ["bonito", "bonita", "feliz", "legal", "forte", "rápido", "rapido", "lento", "inteligente"],
+    "verbos": ["andar", "comer", "fazer", "sair", "viver", "amar", "estudar", "brincar"],
+    "verbosCamble": ["LIRWŊA", "MEQOO", "WRITSEE", "LIVEE", "EES+I", "WOQI", "MARI", "AGWA"]
+  }
+}
