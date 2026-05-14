@@ -25,11 +25,18 @@
   box-sizing: border-box;
 }
 
+html {
+  min-width: 0;
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   color: var(--ink);
   font-family: var(--font-body);
   min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
   --doc-float-1: url("assets/imagens/fundos-docs/camble-doc-capa.png");
   --doc-float-2: url("assets/imagens/fundos-docs/camble-doc-espaco.png");
   --doc-float-3: url("assets/imagens/fundos-docs/camble-doc-biblioteca.png");
@@ -47,6 +54,27 @@ body {
     radial-gradient(circle at 93% 12%, #fff7b5 0 9%, transparent 10%),
     linear-gradient(135deg, var(--bg-1), var(--bg-2));
   background-attachment: fixed;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  max-width: 100%;
+}
+
+button,
+.btn,
+.memory-board .card,
+.domino-hand-piece,
+.digit-card.pick {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body[data-active-screen="intro"] {
@@ -2677,10 +2705,116 @@ body[data-active-screen="cambleplay"] .game-quick-nav {
 .cp-layout {
   margin-top: 0;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(246px, 20vw, 292px);
+  grid-template-columns: minmax(0, 1fr) clamp(220px, 18vw, 270px);
   gap: 12px;
   min-width: 0;
   align-items: start;
+}
+
+.cp-dashboard {
+  min-width: 0;
+}
+
+.cp-dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.04fr);
+  gap: 10px;
+  align-items: start;
+  min-width: 0;
+}
+
+.cp-turn-panel {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.cp-status-bar {
+  margin-top: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.cp-status-bar > div,
+.cp-status-bar > button {
+  width: 100%;
+}
+
+.cp-turn-card {
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cp-dice-card {
+  min-height: 58px;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+}
+
+.cp-dice-img {
+  width: 40px;
+  height: 40px;
+  display: block;
+}
+
+.cp-dice-value {
+  min-width: 0;
+  color: var(--blue-dark);
+  font-size: 1.36rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.cp-roll-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+}
+
+.cp-roll-icon {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+}
+
+.cp-player-list {
+  margin-top: 0;
+  grid-template-columns: 1fr;
+  align-content: start;
+  max-height: min(38vh, 324px);
+  overflow: auto;
+  padding-right: 2px;
+}
+
+.cp-player-list .score-item {
+  min-height: 66px;
+  display: grid;
+  align-content: center;
+  gap: 5px;
+}
+
+.cp-player-list .score-item > strong {
+  min-width: 0;
+}
+
+.cp-player-list .score-item > div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px 8px;
+  color: #173449;
+  font-size: 0.86rem;
+}
+
+.cp-dashboard .cp-status-hero {
+  margin-top: 0;
+  padding: 10px;
 }
 
 .cp-stage {
@@ -2883,12 +3017,6 @@ body[data-active-screen="cambleplay"] .game-quick-nav {
   min-width: 0;
 }
 
-.cp-side-panel .cp-status-hero {
-  margin-top: 0;
-  gap: 12px;
-  padding: 12px;
-}
-
 .cp-side-panel .cp-action {
   margin-top: 0;
   margin-bottom: 0;
@@ -2951,28 +3079,26 @@ body[data-active-screen="cambleplay"] .game-quick-nav {
 }
 
 .cp-side-top {
-  display: grid;
-  grid-template-columns: 1fr 0.92fr;
-  gap: 8px;
-  align-items: stretch;
+  display: block;
   min-width: 0;
 }
 
 .cp-side-decks {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
   min-width: 0;
 }
 
 .cp-deck-panel h4 {
   margin: 0 0 4px;
-  font-size: 0.78rem;
+  font-size: 0.64rem;
   text-align: center;
+  line-height: 1.12;
 }
 
 .cp-card-back {
-  min-height: 92px;
+  min-height: 78px;
   border: 3px solid #111;
   border-radius: 6px;
   display: grid;
@@ -2980,7 +3106,7 @@ body[data-active-screen="cambleplay"] .game-quick-nav {
   text-align: center;
   font-weight: 900;
   line-height: 1.15;
-  font-size: 1rem;
+  font-size: 0.78rem;
   color: #111;
   overflow-wrap: anywhere;
 }
@@ -3006,6 +3132,11 @@ body[data-active-screen="cambleplay"] .game-quick-nav {
   flex-direction: column;
   min-height: 0;
   min-width: 0;
+}
+
+.cp-chat-hidden,
+.cp-chat-panel[hidden] {
+  display: none !important;
 }
 
 .cp-chat-panel h4 {
@@ -3054,6 +3185,14 @@ body[data-active-screen="cambleplay"] .game-quick-nav {
   min-width: 0;
 }
 
+.cp-side-bottom {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: 8px;
+  align-items: stretch;
+  min-width: 0;
+}
+
 .cp-piece-header {
   background: #191919;
   color: #fff;
@@ -3068,7 +3207,7 @@ body[data-active-screen="cambleplay"] .game-quick-nav {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 10px;
+  padding: 8px;
 }
 
 .cp-piece-body img {
@@ -3086,21 +3225,22 @@ body[data-active-screen="cambleplay"] .game-quick-nav {
   border: 3px solid #111;
   border-radius: 8px;
   color: #111;
-  padding: 8px;
-  min-height: 104px;
+  padding: 7px;
+  min-height: 88px;
   transition: background 0.2s ease;
   min-width: 0;
 }
 
 .cp-card-front h4 {
-  margin: 0 0 6px;
+  margin: 0 0 4px;
   color: #5a264c;
+  font-size: 0.84rem;
 }
 
 .cp-card-front p {
   margin: 0;
   line-height: 1.35;
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   overflow-wrap: anywhere;
 }
 
@@ -3241,6 +3381,9 @@ body[data-active-screen="cambleplay"] .game-quick-nav {
   font-weight: 800;
   cursor: pointer;
   font-family: inherit;
+  min-width: 0;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
   box-shadow: 0 7px 0 rgba(18, 45, 66, 0.2);
   transform-origin: center;
   transition: transform 0.13s ease, filter 0.13s ease, box-shadow 0.13s ease;
@@ -3565,7 +3708,7 @@ button,
   }
 
   .cp-shell {
-    grid-template-columns: clamp(285px, 21vw, 340px) minmax(0, 1fr);
+    grid-template-columns: clamp(340px, 30vw, 470px) minmax(0, 1fr);
     grid-template-areas: "controls main";
   }
 
@@ -3582,7 +3725,7 @@ button,
   .cp-dashboard {
     grid-area: side;
     position: sticky;
-    top: 108px;
+    top: 0;
     align-self: start;
   }
 
@@ -3590,7 +3733,7 @@ button,
     grid-area: controls;
     align-self: start;
     position: sticky;
-    top: 108px;
+    top: 0;
   }
 
   .memory-dashboard .status-bar,
@@ -3648,7 +3791,7 @@ button,
   }
 
   .cp-main .cp-layout {
-    grid-template-columns: minmax(0, 1fr) clamp(246px, 20vw, 292px);
+    grid-template-columns: minmax(0, 1fr) clamp(220px, 18vw, 270px);
     gap: 12px;
   }
 
@@ -3827,6 +3970,20 @@ button,
 }
 
 @media (max-width: 700px) {
+  body {
+    background-attachment: scroll;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  .screen {
+    overflow: clip;
+  }
+
   .story-grid {
     gap: 5px;
     padding: 6px;
@@ -4155,6 +4312,13 @@ button,
     box-sizing: border-box;
   }
 
+  .btn,
+  .status-bar > div,
+  .score-item,
+  .modal-actions .btn {
+    min-height: 44px;
+  }
+
   .scoreboard,
   .config-grid {
     grid-template-columns: 1fr;
@@ -4249,25 +4413,20 @@ button,
   }
 
   .cp-side-top {
-    grid-template-columns: minmax(0, 1fr) minmax(112px, 132px);
-    gap: 8px;
-  }
-
-  .cp-chat-log {
-    max-height: 152px;
+    display: block;
   }
 
   .cp-side-decks {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .cp-deck-panel h4 {
-    font-size: 0.68rem;
+    font-size: 0.62rem;
   }
 
   .cp-card-back {
-    min-height: 84px;
-    font-size: 0.95rem;
+    min-height: 72px;
+    font-size: 0.74rem;
   }
 
   .uno-choice-grid {
@@ -4328,7 +4487,6 @@ button,
     gap: 8px;
   }
 
-  .cp-side-panel .cp-status-hero,
   .cp-side-panel .cp-action {
     padding: 12px;
   }
@@ -4553,8 +4711,7 @@ button,
   }
 
   .cp-side-top {
-    grid-template-columns: minmax(0, 1fr) 108px;
-    gap: 6px;
+    display: block;
   }
 
   .cp-card-back {
@@ -4562,7 +4719,6 @@ button,
     font-size: 0.76rem;
   }
 
-  .cp-chat-panel h4,
   .cp-deck-panel h4 {
     font-size: 0.7rem;
   }
@@ -4963,13 +5119,56 @@ button,
     gap: 2px;
   }
 
-  .cp-side-decks {
+  .cp-dashboard-grid {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 8px;
+  }
+
+  .cp-turn-card {
+    min-height: 42px;
+  }
+
+  .cp-dice-card {
+    grid-template-columns: 36px minmax(0, 1fr);
+    min-height: 50px;
+    gap: 6px;
+  }
+
+  .cp-dice-img {
+    width: 34px;
+    height: 34px;
+  }
+
+  .cp-dice-value {
+    font-size: 1.15rem;
+  }
+
+  .cp-player-list .score-item {
+    min-height: 60px;
+    padding: 7px;
+  }
+
+  .cp-player-list .score-item > div {
     grid-template-columns: 1fr;
+    font-size: 0.8rem;
+  }
+
+  .cp-side-decks {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
   }
 
   .cp-card-back {
-    min-height: 76px;
-    font-size: 0.78rem;
+    min-height: 62px;
+    font-size: 0.66rem;
+  }
+
+  .cp-deck-panel h4 {
+    font-size: 0.58rem;
+  }
+
+  .cp-side-bottom {
+    grid-template-columns: 1fr;
   }
 
   .cp-cell {

@@ -6,7 +6,7 @@
   <title>Camble Kids - Plataforma de Jogos!</title>
   <link rel="icon" href="./assets/imagens/ufscar-favicon.ico?v=3" type="image/x-icon">
   <link rel="shortcut icon" href="./assets/imagens/ufscar-favicon.ico?v=3" type="image/x-icon">
-  <link rel="stylesheet" href="styles.css?v=35">
+  <link rel="stylesheet" href="styles.css?v=39">
 </head>
 <body data-active-screen="intro">
   <div class="space-bg" aria-hidden="true">
@@ -263,7 +263,7 @@
           </div>
 
           <div id="memoria-placar" class="scoreboard"></div>
-          <p id="memoria-msg" class="message">Configure e clique em iniciar.</p>
+          <p id="memoria-msg" class="message">Abra Configurações para escolher o modo e iniciar a partida.</p>
         </aside>
       </div>
     </section>
@@ -329,7 +329,7 @@
           </div>
 
           <div id="domino-placar" class="scoreboard"></div>
-          <p id="domino-msg" class="message">Inicie a partida para distribuir as peças.</p>
+          <p id="domino-msg" class="message">Abra Configurações para escolher o modo e iniciar a partida.</p>
           <div id="domino-acoes" class="domino-actions"></div>
           <div id="domino-log" class="log-box"></div>
         </aside>
@@ -377,7 +377,10 @@
 
       <div class="game-shell uno-shell">
         <section class="game-main uno-main">
-          <div id="uno-jogada" class="uno-action"></div>
+          <div id="uno-jogada" class="uno-action">
+            <h3>UNO Camble</h3>
+            <p>Abra Configurações para escolher as rodadas, iniciar a partida e preencher a ficha dos números.</p>
+          </div>
         </section>
 
         <aside class="game-dashboard uno-dashboard">
@@ -436,16 +439,33 @@
 
       <div class="game-shell cp-shell">
         <div class="cp-control-stack">
-        <aside class="game-dashboard cp-dashboard">
-          <div id="cp-status-bar" class="status-bar">
-        <div><strong>Vez:</strong> <span id="cp-turno">-</span></div>
-        <div><strong>Dado:</strong> <span id="cp-dado">-</span></div>
-        <button id="cp-rolar" class="btn btn-secondary">Rolar Dado</button>
-      </div>
+          <aside id="cp-dashboard" class="game-dashboard cp-dashboard">
+            <div class="cp-dashboard-grid">
+              <div class="cp-turn-panel">
+                <div id="cp-status-bar" class="status-bar cp-status-bar">
+                  <div class="cp-turn-card"><strong>Vez:</strong> <span id="cp-turno">-</span></div>
+                  <div class="cp-dice-card" aria-label="Dado">
+                    <img src="assets/imagens/dado.svg" alt="" class="cp-dice-img">
+                    <span id="cp-dado" class="cp-dice-value">-</span>
+                  </div>
+                  <button id="cp-rolar" class="btn btn-secondary cp-roll-btn" type="button">
+                    <img src="assets/imagens/dado.svg" alt="" class="cp-roll-icon">
+                    <span class="cp-roll-label">Rolar Dado</span>
+                  </button>
+                </div>
 
-          <div id="cp-placar" class="scoreboard"></div>
-        </aside>
+                <section id="cp-status-hero" class="cp-status-hero">
+                  <div class="cp-status-icon" aria-hidden="true">🎯</div>
+                  <div>
+                    <strong>Objetivo da vez</strong>
+                    <p>Acompanhe aqui quantas peças e casas ainda faltam para vencer.</p>
+                  </div>
+                </section>
+              </div>
 
+              <div id="cp-placar" class="scoreboard cp-player-list"></div>
+            </div>
+          </aside>
         </div>
 
         <section class="game-main cp-main">
@@ -455,15 +475,10 @@
         </section>
 
         <aside class="cp-side-panel">
-          <section id="cp-status-hero" class="cp-status-hero">
-        <div class="cp-status-icon" aria-hidden="true">🎯</div>
-        <div>
-          <strong>Objetivo da vez</strong>
-          <p>Acompanhe aqui quantas peças e casas ainda faltam para vencer.</p>
-        </div>
-          </section>
-
-          <div id="cp-acao" class="cp-action"></div>
+          <div id="cp-acao" class="cp-action">
+            <h3>Cambleplay</h3>
+            <p>Abra Configurações para escolher o modo, definir a meta de peças e iniciar a partida.</p>
+          </div>
 
           <div class="cp-side-top">
             <div class="cp-side-decks">
@@ -482,24 +497,26 @@
                 <div class="cp-card-back cp-card-sa">SORTE<br>OU<br>AZAR</div>
               </article>
             </div>
+          </div>
 
-            <article id="cp-chat-panel" class="cp-chat-panel">
-              <h4>Jogadas</h4>
-              <div id="cp-log" class="cp-chat-log"></div>
+          <div class="cp-side-bottom">
+            <article class="cp-piece-monte">
+              <div class="cp-piece-header">MONTE DE PEÇAS</div>
+              <div class="cp-piece-body">
+                <img src="assets/imagens/peca-engrenagem.svg" alt="Peça engrenagem">
+                <span id="cp-piece-total">x0</span>
+              </div>
+            </article>
+
+            <article id="cp-card-front" class="cp-card-front">
+              <h4>Última carta</h4>
+              <p>Nenhuma carta revelada ainda.</p>
             </article>
           </div>
 
-          <article class="cp-piece-monte">
-            <div class="cp-piece-header">MONTE DE PEÇAS</div>
-            <div class="cp-piece-body">
-              <img src="assets/imagens/peca-engrenagem.svg" alt="Peça engrenagem">
-              <span id="cp-piece-total">x0</span>
-            </div>
-          </article>
-
-          <article id="cp-card-front" class="cp-card-front">
-            <h4>Última carta</h4>
-            <p>Nenhuma carta revelada ainda.</p>
+          <article id="cp-chat-panel" class="cp-chat-panel cp-chat-hidden" hidden aria-hidden="true">
+            <h4>Jogadas</h4>
+            <div id="cp-log" class="cp-chat-log"></div>
           </article>
         </aside>
       </div>
@@ -546,7 +563,7 @@
 
   <div id="confete" class="confetti-wrap" aria-hidden="true"></div>
 
-  <script src="data/embedded-data.js?v=5"></script>
-  <script src="app.js?v=22"></script>
+  <script src="data/embedded-data.js?v=7"></script>
+  <script src="app.js?v=27"></script>
 </body>
 </html>

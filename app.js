@@ -73,6 +73,24 @@ function escapeAttr(text = "") {
   return escapeHtml(text).replaceAll("'", "&#39;");
 }
 
+function normalizeCambleGlyphs(text = "") {
+  return String(text)
+    .replaceAll("ᙪ", "P")
+    .replaceAll("Է", "B")
+    .replaceAll("Ŋ", "S")
+    .replaceAll("Š", "S")
+    .replaceAll("ᗫ", "D");
+}
+
+function normalizeCambleInput(text = "") {
+  return normalizeCambleGlyphs(text)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toUpperCase()
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function pluralize(count, singular, plural = `${singular}s`) {
   return `${count} ${count === 1 ? singular : plural}`;
 }
@@ -406,7 +424,7 @@ const mobileAssist = {
       memoria: ["#memoria-status", "#memoria-msg"],
       domino: ["#domino-status", "#domino-msg", "#domino-acoes", "#domino-log"],
       uno: ["#uno-status", "#uno-jogada", "#uno-ficha", "#uno-log"],
-      cambleplay: ["#cp-status-bar", "#cp-status-hero", "#cp-acao", "#cp-chat-panel"]
+      cambleplay: ["#cp-dashboard", "#cp-acao"]
     };
     return (selectors[screenName] || [])
       .map((selector) => document.querySelector(selector))
@@ -772,7 +790,7 @@ const memoryGame = {
   reset() {
     this.stopTimer();
     state.games.memoria = null;
-    ui.text("memoria-msg", "Configure e clique em iniciar.");
+    ui.text("memoria-msg", "Abra Configurações para escolher o modo e iniciar a partida.");
     ui.text("memoria-turno", "-");
     ui.text("memoria-movimentos", "0");
     ui.text("memoria-tempo", "00:00");
@@ -1379,7 +1397,7 @@ const dominoGame = {
     state.games.domino = null;
     const modal = document.getElementById("modal-domino-pass");
     if (modal?.open) modal.close();
-    ui.text("domino-msg", "Inicie a partida para distribuir as peças.");
+    ui.text("domino-msg", "Abra Configurações para escolher o modo e iniciar a partida.");
     ui.text("domino-turno", "-");
     ui.text("domino-restantes", "0");
     ui.text("domino-extremos", "-");
@@ -1461,7 +1479,7 @@ const unoGame = {
     panel.querySelector("#uno-number-save").addEventListener("click", () => {
       const nextWords = {};
       panel.querySelectorAll("[data-uno-number]").forEach((input) => {
-        nextWords[input.dataset.unoNumber] = input.value.trim().toUpperCase();
+        nextWords[input.dataset.unoNumber] = normalizeCambleInput(input.value);
       });
       const missing = Object.entries(nextWords)
         .filter(([, value]) => !value)
@@ -1891,7 +1909,7 @@ const unoGame = {
     document.getElementById("uno-placar").innerHTML = "";
     document.getElementById("uno-jogada").innerHTML = `
       <h3>UNO Camble</h3>
-      <p>Abra Configurações e inicie a partida para preencher a ficha dos números.</p>
+      <p>Abra Configurações para escolher as rodadas, iniciar a partida e preencher a ficha dos números.</p>
     `;
     const sheet = document.getElementById("uno-ficha");
     if (sheet) sheet.innerHTML = "";
@@ -1951,7 +1969,12 @@ const cambleplayGame = {
     if (!g) return;
     const current = g.players[g.turn];
     ui.text("cp-turno", current.name);
-    ui.score("cp-placar", g.players, g.turn, (p) => `Peças: ${p.pieces} | Casa: ${p.pos}/${g.board.length - 1}`);
+    ui.score(
+      "cp-placar",
+      g.players,
+      g.turn,
+      (p) => `<span>Peças: ${p.pieces}</span><span>Casa: ${p.pos}/${g.board.length - 1}</span>`
+    );
     ui.text("cp-piece-total", `x${g.players.reduce((sum, p) => sum + p.pieces, 0)}`);
     this.renderStatusHero(g, current);
 
@@ -1994,7 +2017,10 @@ const cambleplayGame = {
 
     const rollBtn = document.getElementById("cp-rolar");
     rollBtn.disabled = g.done || g.waiting || g.walking || current.isBot;
-    rollBtn.textContent = g.walking ? "Andando..." : g.waiting ? "Aguardando..." : "Rolar Dado";
+    const rollLabel = rollBtn.querySelector(".cp-roll-label");
+    const rollText = g.walking ? "Andando..." : g.waiting ? "Aguardando..." : "Rolar Dado";
+    if (rollLabel) rollLabel.textContent = rollText;
+    else rollBtn.textContent = rollText;
   },
 
   renderStatusHero(g, current) {
@@ -2535,8 +2561,8 @@ const cambleplayGame = {
       </div>
     `;
     box.querySelector("#cp-vc-auto").addEventListener("click", () => {
-      const val = box.querySelector("#cp-vc-input").value.toUpperCase();
-      const expected = d.contagemCamble.slice(0, 3).join(" ");
+      const val = normalizeCambleInput(box.querySelector("#cp-vc-input").value);
+      const expected = normalizeCambleInput(d.contagemCamble.slice(0, 3).join(" "));
       const ok = val.includes(expected);
       if (!ok) {
         player.pieces = Math.max(0, player.pieces - 1);
@@ -2573,13 +2599,17 @@ const cambleplayGame = {
 
   actionInput(player, code, done) {
     const valid = state.data.cambleplay.validacaoBasica;
+    const normalizedCambleVerbs = (valid.verbosCamble || []).map((w) => normalizeCambleInput(w));
+    const includesCambleVerb = (text) => normalizedCambleVerbs.some((w) => text.includes(w));
+    const includesCamblePhrase = (text, before, after) =>
+      normalizedCambleVerbs.some((w) => text.includes(`${before}${w}${after}`));
     const validate = (input) => {
-      const t = input.trim().toLowerCase();
+      const t = normalizeCambleInput(input);
       if (!t) return false;
-      if (code === "ADJ") return valid.adjetivos.some((w) => t.includes(w));
-      if (code === "VPA") return t.startsWith("pa ") || valid.verbosCamble.some((w) => t.includes(`pa ${w.toLowerCase()}`));
-      if (code === "VF") return t.endsWith(" pa") || valid.verbosCamble.some((w) => t.includes(`${w.toLowerCase()} pa`));
-      if (code === "VPR") return valid.verbos.some((w) => t.includes(w));
+      if (code === "ADJ") return false;
+      if (code === "VPA") return includesCamblePhrase(t, "PA ", "");
+      if (code === "VF") return includesCamblePhrase(t, "", " PA");
+      if (code === "VPR") return includesCambleVerb(t);
       return false;
     };
     const conclude = (ok, manual = false) => {
@@ -2606,10 +2636,10 @@ const cambleplayGame = {
     }
 
     const help = {
-      ADJ: "Fale um adjetivo em camble.",
-      VPA: "Fale um verbo no passado em camble.",
-      VPR: "Fale um verbo no presente em camble.",
-      VF: "Fale um verbo no futuro em camble."
+      ADJ: "Pronuncie um adjetivo em camble para o grupo validar.",
+      VPA: "Use PA antes de um verbo em camble.",
+      VPR: "Fale um verbo em camble sem auxiliar.",
+      VF: "Use PA depois de um verbo em camble."
     };
     const box = document.getElementById("cp-acao");
     box.innerHTML = `
@@ -2617,11 +2647,20 @@ const cambleplayGame = {
       <p>${help[code]}</p>
       <input id="cp-input-generic" type="text">
       <div class="modal-actions">
-        <button id="cp-input-auto" class="btn btn-primary">Validar automaticamente</button>
-        <button id="cp-input-manual" class="btn btn-secondary">Grupo confirmou</button>
+        ${
+          code === "ADJ"
+            ? `
+              <button id="cp-input-manual" class="btn btn-primary">Grupo confirmou</button>
+              <button id="cp-input-fail" class="btn btn-outline">Não cumpriu</button>
+            `
+            : `
+              <button id="cp-input-auto" class="btn btn-primary">Validar automaticamente</button>
+              <button id="cp-input-manual" class="btn btn-secondary">Grupo confirmou</button>
+            `
+        }
       </div>
     `;
-    box.querySelector("#cp-input-auto").addEventListener("click", () => {
+    box.querySelector("#cp-input-auto")?.addEventListener("click", () => {
       const ok = validate(box.querySelector("#cp-input-generic").value);
       box.innerHTML = "";
       conclude(ok);
@@ -2629,6 +2668,10 @@ const cambleplayGame = {
     box.querySelector("#cp-input-manual").addEventListener("click", () => {
       box.innerHTML = "";
       conclude(true, true);
+    });
+    box.querySelector("#cp-input-fail")?.addEventListener("click", () => {
+      box.innerHTML = "";
+      conclude(false, true);
     });
   },
 
@@ -2742,16 +2785,16 @@ const cambleplayGame = {
       hero.innerHTML = `
         <div class="cp-status-icon" aria-hidden="true">🎯</div>
         <div class="cp-status-copy">
-          <strong>Objetivo da vez</strong>
-          <p>Acompanhe aqui quantas peças e casas ainda faltam para vencer.</p>
+          <strong>Antes de começar</strong>
+          <p>Abra Configurações para escolher o modo, definir a meta de peças e iniciar a partida.</p>
         </div>
       `;
     }
     document.getElementById("cp-placar").innerHTML = "";
     document.getElementById("cp-board").innerHTML = "";
     document.getElementById("cp-acao").innerHTML = `
-      <h3>Desafios da rodada</h3>
-      <p>Inicie a partida para ver os desafios e os botões de passar a vez aqui.</p>
+      <h3>Cambleplay</h3>
+      <p>Abra Configurações para escolher o modo, definir a meta de peças e iniciar a partida.</p>
     `;
     document.getElementById("cp-log").innerHTML = "";
     this.setCardPreview("Última carta", "Nenhuma carta revelada ainda.", "");

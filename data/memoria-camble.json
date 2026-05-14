@@ -9,226 +9,622 @@
     {
       "id": "verbo_andar",
       "tema": "verbos",
-      "a": { "titulo": "Andar", "subtitulo": "Verbo em português", "emoji": "🚶", "descricao": "Pessoa andando" },
-      "b": { "titulo": "LIRWŊA", "subtitulo": "Verbo em camble", "emoji": "🚶", "descricao": "Pessoa andando" }
+      "a": {
+        "titulo": "Andar",
+        "subtitulo": "Verbo em português",
+        "emoji": "🚶",
+        "descricao": "Pessoa andando"
+      },
+      "b": {
+        "titulo": "LIRWSA",
+        "subtitulo": "Verbo em camble",
+        "emoji": "🚶",
+        "descricao": "Pessoa andando"
+      }
     },
     {
       "id": "verbo_comer",
       "tema": "verbos",
-      "a": { "titulo": "Comer", "subtitulo": "Verbo em português", "emoji": "🍎", "descricao": "Comida" },
-      "b": { "titulo": "MEQOO", "subtitulo": "Verbo em camble", "emoji": "🍎", "descricao": "Comida" }
+      "a": {
+        "titulo": "Comer",
+        "subtitulo": "Verbo em português",
+        "emoji": "🍎",
+        "descricao": "Comida"
+      },
+      "b": {
+        "titulo": "MEQOO",
+        "subtitulo": "Verbo em camble",
+        "emoji": "🍎",
+        "descricao": "Comida"
+      }
     },
     {
       "id": "verbo_quebrar",
       "tema": "verbos",
-      "a": { "titulo": "Quebrar", "subtitulo": "Verbo em português", "emoji": "🪨", "descricao": "Objeto quebrado" },
-      "b": { "titulo": "ᙪROOWQ", "subtitulo": "Verbo em camble", "emoji": "🪨", "descricao": "Objeto quebrado" }
+      "a": {
+        "titulo": "Quebrar",
+        "subtitulo": "Verbo em português",
+        "emoji": "🪨",
+        "descricao": "Objeto quebrado"
+      },
+      "b": {
+        "titulo": "PROOWQ",
+        "subtitulo": "Verbo em camble",
+        "emoji": "🪨",
+        "descricao": "Objeto quebrado"
+      }
     },
     {
       "id": "verbo_crescer",
       "tema": "verbos",
-      "a": { "titulo": "Crescer", "subtitulo": "Verbo em português", "emoji": "🌱", "descricao": "Planta crescendo" },
-      "b": { "titulo": "IGIԷEE", "subtitulo": "Verbo em camble", "emoji": "🌱", "descricao": "Planta crescendo" }
+      "a": {
+        "titulo": "Crescer",
+        "subtitulo": "Verbo em português",
+        "emoji": "🌱",
+        "descricao": "Planta crescendo"
+      },
+      "b": {
+        "titulo": "IGIBEE",
+        "subtitulo": "Verbo em camble",
+        "emoji": "🌱",
+        "descricao": "Planta crescendo"
+      }
     },
     {
       "id": "verbo_fazer",
       "tema": "verbos",
-      "a": { "titulo": "Fazer", "subtitulo": "Verbo em português", "emoji": "🧠", "descricao": "Ideia e ação" },
-      "b": { "titulo": "GAREES+EE", "subtitulo": "Verbo em camble", "emoji": "🧠", "descricao": "Ideia e ação" }
+      "a": {
+        "titulo": "Fazer",
+        "subtitulo": "Verbo em português",
+        "emoji": "🧠",
+        "descricao": "Ideia e ação"
+      },
+      "b": {
+        "titulo": "GAREES+EE",
+        "subtitulo": "Verbo em camble",
+        "emoji": "🧠",
+        "descricao": "Ideia e ação"
+      }
     },
     {
       "id": "verbo_escrever",
       "tema": "verbos",
-      "a": { "titulo": "Escrever", "subtitulo": "Verbo em português", "emoji": "✍️", "descricao": "Escrita" },
-      "b": { "titulo": "WRITSEE", "subtitulo": "Verbo em camble", "emoji": "✍️", "descricao": "Escrita" }
+      "a": {
+        "titulo": "Escrever",
+        "subtitulo": "Verbo em português",
+        "emoji": "✍️",
+        "descricao": "Escrita"
+      },
+      "b": {
+        "titulo": "WRITSEE",
+        "subtitulo": "Verbo em camble",
+        "emoji": "✍️",
+        "descricao": "Escrita"
+      }
     },
     {
       "id": "verbo_viver",
       "tema": "verbos",
-      "a": { "titulo": "Viver", "subtitulo": "Verbo em português", "emoji": "🌍", "descricao": "Vida" },
-      "b": { "titulo": "LIVEE", "subtitulo": "Verbo em camble", "emoji": "🌍", "descricao": "Vida" }
+      "a": {
+        "titulo": "Viver",
+        "subtitulo": "Verbo em português",
+        "emoji": "🌍",
+        "descricao": "Vida"
+      },
+      "b": {
+        "titulo": "LIVEE",
+        "subtitulo": "Verbo em camble",
+        "emoji": "🌍",
+        "descricao": "Vida"
+      }
     },
     {
       "id": "verbo_fechar",
       "tema": "verbos",
-      "a": { "titulo": "Fechar", "subtitulo": "Verbo em português", "emoji": "🔒", "descricao": "Cadeado fechado" },
-      "b": { "titulo": "QLOOWS+EE", "subtitulo": "Verbo em camble", "emoji": "🔒", "descricao": "Cadeado fechado" }
+      "a": {
+        "titulo": "Fechar",
+        "subtitulo": "Verbo em português",
+        "emoji": "🔒",
+        "descricao": "Cadeado fechado"
+      },
+      "b": {
+        "titulo": "QLOOWS+EE",
+        "subtitulo": "Verbo em camble",
+        "emoji": "🔒",
+        "descricao": "Cadeado fechado"
+      }
     },
     {
       "id": "verbo_parar",
       "tema": "verbos",
-      "a": { "titulo": "Parar", "subtitulo": "Verbo em português", "emoji": "🛑", "descricao": "Placa de pare" },
-      "b": { "titulo": "ISԷOOPOOSZI", "subtitulo": "Verbo em camble", "emoji": "🛑", "descricao": "Placa de pare" }
+      "a": {
+        "titulo": "Parar",
+        "subtitulo": "Verbo em português",
+        "emoji": "🛑",
+        "descricao": "Placa de pare"
+      },
+      "b": {
+        "titulo": "ISBOOPOOSZI",
+        "subtitulo": "Verbo em camble",
+        "emoji": "🛑",
+        "descricao": "Placa de pare"
+      }
     },
     {
       "id": "verbo_construir",
       "tema": "verbos",
-      "a": { "titulo": "Construir", "subtitulo": "Verbo em português", "emoji": "🛠️", "descricao": "Ferramentas" },
-      "b": { "titulo": "BWARQI", "subtitulo": "Verbo em camble", "emoji": "🛠️", "descricao": "Ferramentas" }
+      "a": {
+        "titulo": "Construir",
+        "subtitulo": "Verbo em português",
+        "emoji": "🛠️",
+        "descricao": "Ferramentas"
+      },
+      "b": {
+        "titulo": "BWARQI",
+        "subtitulo": "Verbo em camble",
+        "emoji": "🛠️",
+        "descricao": "Ferramentas"
+      }
     },
     {
       "id": "verbo_cair",
       "tema": "verbos",
-      "a": { "titulo": "Cair", "subtitulo": "Verbo em português", "emoji": "⬇️", "descricao": "Seta para baixo" },
-      "b": { "titulo": "FOOW", "subtitulo": "Verbo em camble", "emoji": "⬇️", "descricao": "Seta para baixo" }
+      "a": {
+        "titulo": "Cair",
+        "subtitulo": "Verbo em português",
+        "emoji": "⬇️",
+        "descricao": "Seta para baixo"
+      },
+      "b": {
+        "titulo": "FOOW",
+        "subtitulo": "Verbo em camble",
+        "emoji": "⬇️",
+        "descricao": "Seta para baixo"
+      }
     },
     {
       "id": "verbo_amar",
       "tema": "verbos",
-      "a": { "titulo": "Amar", "subtitulo": "Verbo em português", "emoji": "❤️", "descricao": "Coração" },
-      "b": { "titulo": "MARI", "subtitulo": "Verbo em camble", "emoji": "❤️", "descricao": "Coração" }
+      "a": {
+        "titulo": "Amar",
+        "subtitulo": "Verbo em português",
+        "emoji": "❤️",
+        "descricao": "Coração"
+      },
+      "b": {
+        "titulo": "MARI",
+        "subtitulo": "Verbo em camble",
+        "emoji": "❤️",
+        "descricao": "Coração"
+      }
     },
     {
       "id": "verbo_esquentar",
       "tema": "verbos",
-      "a": { "titulo": "Esquentar", "subtitulo": "Verbo em português", "emoji": "🔥", "descricao": "Fogo" },
-      "b": { "titulo": "SWGLI", "subtitulo": "Verbo em camble", "emoji": "🔥", "descricao": "Fogo" }
+      "a": {
+        "titulo": "Esquentar",
+        "subtitulo": "Verbo em português",
+        "emoji": "🔥",
+        "descricao": "Fogo"
+      },
+      "b": {
+        "titulo": "SWGLI",
+        "subtitulo": "Verbo em camble",
+        "emoji": "🔥",
+        "descricao": "Fogo"
+      }
     },
     {
       "id": "verbo_esperar",
       "tema": "verbos",
-      "a": { "titulo": "Esperar", "subtitulo": "Verbo em português", "emoji": "⏳", "descricao": "Ampulheta" },
-      "b": { "titulo": "AGWA", "subtitulo": "Verbo em camble", "emoji": "⏳", "descricao": "Ampulheta" }
+      "a": {
+        "titulo": "Esperar",
+        "subtitulo": "Verbo em português",
+        "emoji": "⏳",
+        "descricao": "Ampulheta"
+      },
+      "b": {
+        "titulo": "AGWA",
+        "subtitulo": "Verbo em camble",
+        "emoji": "⏳",
+        "descricao": "Ampulheta"
+      }
     },
     {
       "id": "verbo_sair",
       "tema": "verbos",
-      "a": { "titulo": "Sair", "subtitulo": "Verbo em português", "emoji": "🚪", "descricao": "Porta de saída" },
-      "b": { "titulo": "EES+I", "subtitulo": "Verbo em camble", "emoji": "🚪", "descricao": "Porta de saída" }
+      "a": {
+        "titulo": "Sair",
+        "subtitulo": "Verbo em português",
+        "emoji": "🚪",
+        "descricao": "Porta de saída"
+      },
+      "b": {
+        "titulo": "EES+I",
+        "subtitulo": "Verbo em camble",
+        "emoji": "🚪",
+        "descricao": "Porta de saída"
+      }
     },
     {
       "id": "verbo_trabalhar",
       "tema": "verbos",
-      "a": { "titulo": "Trabalhar", "subtitulo": "Verbo em português", "emoji": "💼", "descricao": "Pasta de trabalho" },
-      "b": { "titulo": "WOQI", "subtitulo": "Verbo em camble", "emoji": "💼", "descricao": "Pasta de trabalho" }
+      "a": {
+        "titulo": "Trabalhar",
+        "subtitulo": "Verbo em português",
+        "emoji": "💼",
+        "descricao": "Pasta de trabalho"
+      },
+      "b": {
+        "titulo": "WOQI",
+        "subtitulo": "Verbo em camble",
+        "emoji": "💼",
+        "descricao": "Pasta de trabalho"
+      }
     },
     {
       "id": "verbo_ligar",
       "tema": "verbos",
-      "a": { "titulo": "Ligar", "subtitulo": "Verbo em português", "emoji": "🔌", "descricao": "Tomada e plugue" },
-      "b": { "titulo": "PEELEEI", "subtitulo": "Verbo em camble", "emoji": "🔌", "descricao": "Tomada e plugue" }
+      "a": {
+        "titulo": "Ligar",
+        "subtitulo": "Verbo em português",
+        "emoji": "🔌",
+        "descricao": "Tomada e plugue"
+      },
+      "b": {
+        "titulo": "PEELEEI",
+        "subtitulo": "Verbo em camble",
+        "emoji": "🔌",
+        "descricao": "Tomada e plugue"
+      }
     },
     {
       "id": "verbo_sonhar",
       "tema": "verbos",
-      "a": { "titulo": "Sonhar", "subtitulo": "Verbo em português", "emoji": "🌙", "descricao": "Lua e sonho" },
-      "b": { "titulo": "DRWPLA", "subtitulo": "Verbo em camble", "emoji": "🌙", "descricao": "Lua e sonho" }
+      "a": {
+        "titulo": "Sonhar",
+        "subtitulo": "Verbo em português",
+        "emoji": "🌙",
+        "descricao": "Lua e sonho"
+      },
+      "b": {
+        "titulo": "DRWPLA",
+        "subtitulo": "Verbo em camble",
+        "emoji": "🌙",
+        "descricao": "Lua e sonho"
+      }
     },
     {
       "id": "assoc_zero",
       "tema": "associacoes",
-      "a": { "titulo": "Zero", "subtitulo": "Associação visual", "emoji": "0️⃣", "descricao": "Número zero" },
-      "b": { "titulo": "MOO", "subtitulo": "Palavra em camble", "emoji": "0️⃣", "descricao": "Número zero" }
+      "a": {
+        "titulo": "Zero",
+        "subtitulo": "Associação visual",
+        "emoji": "0️⃣",
+        "descricao": "Número zero"
+      },
+      "b": {
+        "titulo": "MOO",
+        "subtitulo": "Palavra em camble",
+        "emoji": "0️⃣",
+        "descricao": "Número zero"
+      }
     },
     {
       "id": "assoc_um",
       "tema": "associacoes",
-      "a": { "titulo": "Um", "subtitulo": "Associação visual", "emoji": "1️⃣", "descricao": "Número um" },
-      "b": { "titulo": "UNE", "subtitulo": "Palavra em camble", "emoji": "1️⃣", "descricao": "Número um" }
+      "a": {
+        "titulo": "Um",
+        "subtitulo": "Associação visual",
+        "emoji": "1️⃣",
+        "descricao": "Número um"
+      },
+      "b": {
+        "titulo": "UNE",
+        "subtitulo": "Palavra em camble",
+        "emoji": "1️⃣",
+        "descricao": "Número um"
+      }
     },
     {
       "id": "assoc_dois",
       "tema": "associacoes",
-      "a": { "titulo": "Dois", "subtitulo": "Associação visual", "emoji": "2️⃣", "descricao": "Número dois" },
-      "b": { "titulo": "TO", "subtitulo": "Palavra em camble", "emoji": "2️⃣", "descricao": "Número dois" }
+      "a": {
+        "titulo": "Dois",
+        "subtitulo": "Associação visual",
+        "emoji": "2️⃣",
+        "descricao": "Número dois"
+      },
+      "b": {
+        "titulo": "TO",
+        "subtitulo": "Palavra em camble",
+        "emoji": "2️⃣",
+        "descricao": "Número dois"
+      }
     },
     {
       "id": "assoc_tres",
       "tema": "associacoes",
-      "a": { "titulo": "Três", "subtitulo": "Associação visual", "emoji": "3️⃣", "descricao": "Número três" },
-      "b": { "titulo": "WIQIS", "subtitulo": "Palavra em camble", "emoji": "3️⃣", "descricao": "Número três" }
+      "a": {
+        "titulo": "Três",
+        "subtitulo": "Associação visual",
+        "emoji": "3️⃣",
+        "descricao": "Número três"
+      },
+      "b": {
+        "titulo": "WIQIS",
+        "subtitulo": "Palavra em camble",
+        "emoji": "3️⃣",
+        "descricao": "Número três"
+      }
     },
     {
       "id": "assoc_quatro",
       "tema": "associacoes",
-      "a": { "titulo": "Quatro", "subtitulo": "Associação visual", "emoji": "4️⃣", "descricao": "Número quatro" },
-      "b": { "titulo": "WOO", "subtitulo": "Palavra em camble", "emoji": "4️⃣", "descricao": "Número quatro" }
+      "a": {
+        "titulo": "Quatro",
+        "subtitulo": "Associação visual",
+        "emoji": "4️⃣",
+        "descricao": "Número quatro"
+      },
+      "b": {
+        "titulo": "WOO",
+        "subtitulo": "Palavra em camble",
+        "emoji": "4️⃣",
+        "descricao": "Número quatro"
+      }
     },
     {
       "id": "assoc_cinco",
       "tema": "associacoes",
-      "a": { "titulo": "Cinco", "subtitulo": "Associação visual", "emoji": "5️⃣", "descricao": "Número cinco" },
-      "b": { "titulo": "EPITA", "subtitulo": "Palavra em camble", "emoji": "5️⃣", "descricao": "Número cinco" }
+      "a": {
+        "titulo": "Cinco",
+        "subtitulo": "Associação visual",
+        "emoji": "5️⃣",
+        "descricao": "Número cinco"
+      },
+      "b": {
+        "titulo": "EPITA",
+        "subtitulo": "Palavra em camble",
+        "emoji": "5️⃣",
+        "descricao": "Número cinco"
+      }
     },
     {
       "id": "assoc_seis",
       "tema": "associacoes",
-      "a": { "titulo": "Seis", "subtitulo": "Associação visual", "emoji": "6️⃣", "descricao": "Número seis" },
-      "b": { "titulo": "TOWIQIS", "subtitulo": "Palavra em camble", "emoji": "6️⃣", "descricao": "Número seis" }
+      "a": {
+        "titulo": "Seis",
+        "subtitulo": "Associação visual",
+        "emoji": "6️⃣",
+        "descricao": "Número seis"
+      },
+      "b": {
+        "titulo": "TOWIQIS",
+        "subtitulo": "Palavra em camble",
+        "emoji": "6️⃣",
+        "descricao": "Número seis"
+      }
     },
     {
       "id": "assoc_sete",
       "tema": "associacoes",
-      "a": { "titulo": "Sete", "subtitulo": "Associação visual", "emoji": "7️⃣", "descricao": "Número sete" },
-      "b": { "titulo": "OQITEE", "subtitulo": "Palavra em camble", "emoji": "7️⃣", "descricao": "Número sete" }
+      "a": {
+        "titulo": "Sete",
+        "subtitulo": "Associação visual",
+        "emoji": "7️⃣",
+        "descricao": "Número sete"
+      },
+      "b": {
+        "titulo": "OQITEE",
+        "subtitulo": "Palavra em camble",
+        "emoji": "7️⃣",
+        "descricao": "Número sete"
+      }
     },
     {
       "id": "assoc_oito",
       "tema": "associacoes",
-      "a": { "titulo": "Oito", "subtitulo": "Associação visual", "emoji": "8️⃣", "descricao": "Número oito" },
-      "b": { "titulo": "EEŊEEA", "subtitulo": "Palavra em camble", "emoji": "8️⃣", "descricao": "Número oito" }
+      "a": {
+        "titulo": "Oito",
+        "subtitulo": "Associação visual",
+        "emoji": "8️⃣",
+        "descricao": "Número oito"
+      },
+      "b": {
+        "titulo": "EESEEA",
+        "subtitulo": "Palavra em camble",
+        "emoji": "8️⃣",
+        "descricao": "Número oito"
+      }
     },
     {
       "id": "assoc_nove",
       "tema": "associacoes",
-      "a": { "titulo": "Nove", "subtitulo": "Associação visual", "emoji": "9️⃣", "descricao": "Número nove" },
-      "b": { "titulo": "PAAŊ", "subtitulo": "Palavra em camble", "emoji": "9️⃣", "descricao": "Número nove" }
+      "a": {
+        "titulo": "Nove",
+        "subtitulo": "Associação visual",
+        "emoji": "9️⃣",
+        "descricao": "Número nove"
+      },
+      "b": {
+        "titulo": "PAAS",
+        "subtitulo": "Palavra em camble",
+        "emoji": "9️⃣",
+        "descricao": "Número nove"
+      }
     },
     {
       "id": "assoc_sabedoria",
       "tema": "associacoes",
-      "a": { "titulo": "Sabedoria", "subtitulo": "Associação visual", "emoji": "📚", "descricao": "Livros" },
-      "b": { "titulo": "IŊԷELEQԷWS", "subtitulo": "Palavra em camble", "emoji": "📚", "descricao": "Livros" }
+      "a": {
+        "titulo": "Sabedoria",
+        "subtitulo": "Associação visual",
+        "emoji": "📚",
+        "descricao": "Livros"
+      },
+      "b": {
+        "titulo": "ISBELEQBWS",
+        "subtitulo": "Palavra em camble",
+        "emoji": "📚",
+        "descricao": "Livros"
+      }
     },
     {
       "id": "assoc_ser",
       "tema": "associacoes",
-      "a": { "titulo": "Ser", "subtitulo": "Associação visual", "emoji": "👤", "descricao": "Pessoa" },
-      "b": { "titulo": "QIQLEE", "subtitulo": "Palavra em camble", "emoji": "👤", "descricao": "Pessoa" }
+      "a": {
+        "titulo": "Ser",
+        "subtitulo": "Associação visual",
+        "emoji": "👤",
+        "descricao": "Pessoa"
+      },
+      "b": {
+        "titulo": "QIQLEE",
+        "subtitulo": "Palavra em camble",
+        "emoji": "👤",
+        "descricao": "Pessoa"
+      }
     },
     {
       "id": "assoc_poder",
       "tema": "associacoes",
-      "a": { "titulo": "Poder", "subtitulo": "Associação visual", "emoji": "⚡", "descricao": "Raio" },
-      "b": { "titulo": "SWPEER", "subtitulo": "Palavra em camble", "emoji": "⚡", "descricao": "Raio" }
+      "a": {
+        "titulo": "Poder",
+        "subtitulo": "Associação visual",
+        "emoji": "⚡",
+        "descricao": "Raio"
+      },
+      "b": {
+        "titulo": "SWPEER",
+        "subtitulo": "Palavra em camble",
+        "emoji": "⚡",
+        "descricao": "Raio"
+      }
     },
     {
       "id": "assoc_maquina",
       "tema": "associacoes",
-      "a": { "titulo": "Máquina", "subtitulo": "Associação visual", "emoji": "⚙️", "descricao": "Engrenagem" },
-      "b": { "titulo": "JJAQOWA", "subtitulo": "Palavra em camble", "emoji": "⚙️", "descricao": "Engrenagem" }
+      "a": {
+        "titulo": "Máquina",
+        "subtitulo": "Associação visual",
+        "emoji": "⚙️",
+        "descricao": "Engrenagem"
+      },
+      "b": {
+        "titulo": "JJAQOWA",
+        "subtitulo": "Palavra em camble",
+        "emoji": "⚙️",
+        "descricao": "Engrenagem"
+      }
     },
     {
       "id": "assoc_rainha",
       "tema": "associacoes",
-      "a": { "titulo": "Rainha", "subtitulo": "Associação visual", "emoji": "👑", "descricao": "Coroa" },
-      "b": { "titulo": "QIQWIŊ", "subtitulo": "Palavra em camble", "emoji": "👑", "descricao": "Coroa" }
+      "a": {
+        "titulo": "Rainha",
+        "subtitulo": "Associação visual",
+        "emoji": "👑",
+        "descricao": "Coroa"
+      },
+      "b": {
+        "titulo": "QIQWIS",
+        "subtitulo": "Palavra em camble",
+        "emoji": "👑",
+        "descricao": "Coroa"
+      }
     },
     {
       "id": "assoc_metro",
       "tema": "associacoes",
-      "a": { "titulo": "Metro", "subtitulo": "Associação visual", "emoji": "📏", "descricao": "Régua" },
-      "b": { "titulo": "ᗫRA", "subtitulo": "Palavra em camble", "emoji": "📏", "descricao": "Régua" }
+      "a": {
+        "titulo": "Metro",
+        "subtitulo": "Associação visual",
+        "emoji": "📏",
+        "descricao": "Régua"
+      },
+      "b": {
+        "titulo": "DRA",
+        "subtitulo": "Palavra em camble",
+        "emoji": "📏",
+        "descricao": "Régua"
+      }
     }
   ],
   "modos": {
     "misto": [
-      "verbo_andar", "verbo_comer", "verbo_quebrar", "verbo_crescer", "verbo_fazer", "verbo_escrever",
-      "verbo_viver", "verbo_fechar", "verbo_parar", "verbo_construir", "verbo_cair", "verbo_amar",
-      "verbo_esquentar", "verbo_esperar", "verbo_sair", "verbo_trabalhar", "verbo_ligar", "verbo_sonhar",
-      "assoc_zero", "assoc_um", "assoc_dois", "assoc_tres", "assoc_quatro", "assoc_cinco",
-      "assoc_seis", "assoc_sete", "assoc_oito", "assoc_nove", "assoc_sabedoria", "assoc_ser",
-      "assoc_poder", "assoc_maquina", "assoc_rainha", "assoc_metro"
+      "verbo_andar",
+      "verbo_comer",
+      "verbo_quebrar",
+      "verbo_crescer",
+      "verbo_fazer",
+      "verbo_escrever",
+      "verbo_viver",
+      "verbo_fechar",
+      "verbo_parar",
+      "verbo_construir",
+      "verbo_cair",
+      "verbo_amar",
+      "verbo_esquentar",
+      "verbo_esperar",
+      "verbo_sair",
+      "verbo_trabalhar",
+      "verbo_ligar",
+      "verbo_sonhar",
+      "assoc_zero",
+      "assoc_um",
+      "assoc_dois",
+      "assoc_tres",
+      "assoc_quatro",
+      "assoc_cinco",
+      "assoc_seis",
+      "assoc_sete",
+      "assoc_oito",
+      "assoc_nove",
+      "assoc_sabedoria",
+      "assoc_ser",
+      "assoc_poder",
+      "assoc_maquina",
+      "assoc_rainha",
+      "assoc_metro"
     ],
     "verbos": [
-      "verbo_andar", "verbo_comer", "verbo_quebrar", "verbo_crescer", "verbo_fazer", "verbo_escrever",
-      "verbo_viver", "verbo_fechar", "verbo_parar", "verbo_construir", "verbo_cair", "verbo_amar",
-      "verbo_esquentar", "verbo_esperar", "verbo_sair", "verbo_trabalhar", "verbo_ligar", "verbo_sonhar"
+      "verbo_andar",
+      "verbo_comer",
+      "verbo_quebrar",
+      "verbo_crescer",
+      "verbo_fazer",
+      "verbo_escrever",
+      "verbo_viver",
+      "verbo_fechar",
+      "verbo_parar",
+      "verbo_construir",
+      "verbo_cair",
+      "verbo_amar",
+      "verbo_esquentar",
+      "verbo_esperar",
+      "verbo_sair",
+      "verbo_trabalhar",
+      "verbo_ligar",
+      "verbo_sonhar"
     ],
     "associacoes": [
-      "assoc_zero", "assoc_um", "assoc_dois", "assoc_tres", "assoc_quatro", "assoc_cinco",
-      "assoc_seis", "assoc_sete", "assoc_oito", "assoc_nove", "assoc_sabedoria", "assoc_ser",
-      "assoc_poder", "assoc_maquina", "assoc_rainha", "assoc_metro"
+      "assoc_zero",
+      "assoc_um",
+      "assoc_dois",
+      "assoc_tres",
+      "assoc_quatro",
+      "assoc_cinco",
+      "assoc_seis",
+      "assoc_sete",
+      "assoc_oito",
+      "assoc_nove",
+      "assoc_sabedoria",
+      "assoc_ser",
+      "assoc_poder",
+      "assoc_maquina",
+      "assoc_rainha",
+      "assoc_metro"
     ]
   }
 }
