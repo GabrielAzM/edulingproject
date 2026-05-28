@@ -618,6 +618,7 @@ body[data-active-screen="home"] .header-actions {
   display: none;
 }
 
+body[data-active-screen="home"] .global-header,
 body[data-active-screen="memoria"] .global-header,
 body[data-active-screen="domino"] .global-header,
 body[data-active-screen="uno"] .global-header,
@@ -762,6 +763,18 @@ body[data-active-screen="cambleplay"] .game-quick-nav {
   --screen-art-b-right: -34px;
   --screen-art-b-rotate: 7deg;
   --screen-art-b-opacity: 0.13;
+}
+
+.home-nav {
+  margin-bottom: 14px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.home-nav .btn {
+  border-radius: 999px;
+  padding-inline: 18px;
+  white-space: nowrap;
 }
 
 .screen[data-screen="intro"] {
