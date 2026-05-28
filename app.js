@@ -20,6 +20,15 @@ const BOT_BALANCE = {
   cpInput: 0.3,
   cpCea: 0.25
 };
+const BOT_TIMING = {
+  memoryThink: 1050,
+  memorySecondPick: 650,
+  dominoAfterBuy: 760,
+  dominoNoMove: 920,
+  dominoPlay: 1120,
+  unoPlay: 1050,
+  cpRoll: 1220
+};
 const DATA_FILE_PATHS = {
   memoria: "data/memoria-camble.json",
   domino: "data/domino-camble.json",
@@ -565,6 +574,14 @@ const gamification = {
     return Math.round((score / totalWeight) * 100);
   },
 
+  participantType(player) {
+    return player.isBot ? "Bot" : "Player";
+  },
+
+  participantCountLabel(count, label) {
+    return `${count} ${label}${count === 1 ? "" : "s"}`;
+  },
+
   createReport({ gameName, message, players, features, summary = [] }) {
     const selectedFeatures = this.selectFeatures(players, features);
     const ranking = players
@@ -585,6 +602,8 @@ const gamification = {
           name: player.name,
           color: player.color || PLAYER_COLORS[index % PLAYER_COLORS.length],
           isBot: Boolean(player.isBot),
+          kindLabel: this.participantType(player),
+          chartLabel: `${player.name} (${this.participantType(player)})`,
           performance: this.performanceFor(player, selectedFeatures),
           primaryValue: primary ? this.featureValue(primary, player) : 0,
           values
@@ -601,6 +620,11 @@ const gamification = {
       gameName,
       message,
       summary,
+      participants: {
+        players: ranking.filter((row) => !row.isBot).length,
+        bots: ranking.filter((row) => row.isBot).length,
+        total: ranking.length
+      },
       selectedFeatures,
       ranking,
       highlights: this.buildHighlights(ranking, selectedFeatures)
@@ -665,6 +689,12 @@ const gamification = {
     const featureChips = report.selectedFeatures
       .map((feature) => `<span>${escapeHtml(feature.shortLabel || feature.label)}</span>`)
       .join("");
+    const participantText = [
+      this.participantCountLabel(report.participants.players, "Player"),
+      report.participants.bots ? this.participantCountLabel(report.participants.bots, "Bot") : ""
+    ]
+      .filter(Boolean)
+      .join(" + ");
 
     return `
       <section class="endgame-report" aria-label="Resultado gamificado de ${escapeAttr(report.gameName)}">
@@ -678,12 +708,18 @@ const gamification = {
           <div>${featureChips}</div>
         </div>
 
+        <div class="endgame-participants">
+          <strong>Participantes no gráfico</strong>
+          <span>${escapeHtml(participantText)}</span>
+        </div>
+
         <div class="endgame-layout">
           <section class="endgame-chart-panel" aria-labelledby="endgame-chart-title">
-            <h4 id="endgame-chart-title">Comparativo final</h4>
+            <h4 id="endgame-chart-title">Comparativo Player x Bot</h4>
             <div class="endgame-chart-wrap">
-              <canvas id="endgame-chart" aria-label="Gráfico de desempenho final dos jogadores"></canvas>
+              <canvas id="endgame-chart" aria-label="Gráfico comparando métricas finais de players e bots"></canvas>
             </div>
+            <p class="endgame-chart-note">As métricas são normalizadas em 0-100 para comparar jogadores, bots e partidas com 2 participantes.</p>
             <p id="endgame-chart-fallback" class="endgame-chart-fallback" hidden></p>
           </section>
 
@@ -697,6 +733,7 @@ const gamification = {
                       <div class="endgame-rank-topline">
                         <span class="endgame-rank-pos">${index + 1}º</span>
                         <strong>${escapeHtml(row.name)}</strong>
+                        <span class="endgame-player-type">${escapeHtml(row.kindLabel)}</span>
                         <span>${row.performance}%</span>
                       </div>
                       <div class="endgame-rank-meter" aria-hidden="true">
@@ -752,20 +789,37 @@ const gamification = {
     const compact = window.matchMedia("(max-width: 520px)").matches;
     const valueScale = compact ? "x" : "y";
     const categoryScale = compact ? "y" : "x";
+    const metricColors = ["#ffb347", "#5fd46f", "#9b7cff", "#17bebb"];
+    const chartFeatures = report.selectedFeatures.slice(0, 3);
+    const metricDatasets = chartFeatures.map((feature, index) => ({
+      label: feature.shortLabel || feature.label,
+      data: report.ranking.map((row) => {
+        const item = row.values.find((value) => value.key === feature.key);
+        return Math.round(this.normalizedValue(feature, item?.value ?? 0) * 100);
+      }),
+      backgroundColor: metricColors[index % metricColors.length],
+      borderColor: "#173449",
+      borderWidth: 1,
+      borderRadius: 10,
+      featureKey: feature.key,
+      maxBarThickness: report.ranking.length <= 2 ? 44 : 28
+    }));
 
     state.resultChart = new Chart(canvas, {
       type: "bar",
       data: {
-        labels: report.ranking.map((row) => row.name),
+        labels: report.ranking.map((row) => row.chartLabel),
         datasets: [
           {
-            label: "Desempenho final",
+            label: "Desempenho geral",
             data: report.ranking.map((row) => row.performance),
             backgroundColor: report.ranking.map((row) => row.color),
             borderColor: "#173449",
             borderWidth: 2,
-            borderRadius: 12
-          }
+            borderRadius: 12,
+            maxBarThickness: report.ranking.length <= 2 ? 52 : 34
+          },
+          ...metricDatasets
         ]
       },
       options: {
@@ -773,6 +827,8 @@ const gamification = {
         maintainAspectRatio: false,
         resizeDelay: 80,
         indexAxis: compact ? "y" : "x",
+        categoryPercentage: report.ranking.length <= 2 ? 0.58 : 0.74,
+        barPercentage: report.ranking.length <= 2 ? 0.86 : 0.78,
         scales: {
           [valueScale]: {
             beginAtZero: true,
@@ -788,11 +844,33 @@ const gamification = {
           }
         },
         plugins: {
-          legend: { display: false },
+          legend: {
+            display: true,
+            position: compact ? "bottom" : "top",
+            labels: {
+              boxWidth: 14,
+              color: "#173449",
+              font: {
+                weight: "700"
+              }
+            }
+          },
           tooltip: {
             callbacks: {
+              beforeLabel: (context) => {
+                const row = report.ranking[context.dataIndex];
+                return `Tipo: ${row.kindLabel}`;
+              },
+              label: (context) => {
+                const value = context.parsed[valueScale];
+                return `${context.dataset.label}: ${value}%`;
+              },
               afterLabel: (context) => {
                 const row = report.ranking[context.dataIndex];
+                if (context.dataset.featureKey) {
+                  const item = row.values.find((value) => value.key === context.dataset.featureKey);
+                  return item ? `Valor real: ${item.display}` : "";
+                }
                 return row.values.map((item) => `${item.shortLabel}: ${item.display}`);
               }
             }
@@ -1064,8 +1142,8 @@ const memoryGame = {
         const latest = state.games.memoria;
         if (!latest || latest.done || latest.sid !== sid) return;
         this.pickCore(second);
-      }, 400);
-    }, 680);
+      }, BOT_TIMING.memorySecondPick);
+    }, BOT_TIMING.memoryThink);
   },
 
   checkEnd() {
@@ -1481,7 +1559,7 @@ const dominoGame = {
         if (fresh.players[fresh.turn].id !== player.id) return;
         const idx = fresh.players[fresh.turn].hand.findIndex((piece) => piece.id === drawn.id);
         if (idx >= 0) this.playFromHand(idx, side);
-      }, 450);
+      }, BOT_TIMING.dominoAfterBuy);
       return;
     }
 
@@ -1637,7 +1715,7 @@ const dominoGame = {
           } else {
             this.passTurn("sem peça para encaixar");
           }
-        }, 560);
+        }, BOT_TIMING.dominoNoMove);
         return;
       }
       const sid = g.sid;
@@ -1645,7 +1723,7 @@ const dominoGame = {
         const fresh = state.games.domino;
         if (!fresh || fresh.done || fresh.sid !== sid) return;
         this.botPlay();
-      }, 720);
+      }, BOT_TIMING.dominoPlay);
       return;
     }
 
@@ -2219,7 +2297,7 @@ const unoGame = {
       fresh.turn += 1;
       this.render();
       this.runTurn();
-    }, 620);
+    }, BOT_TIMING.unoPlay);
   },
 
   recordPlayerRound(player) {
@@ -3288,7 +3366,7 @@ const cambleplayGame = {
       const fresh = state.games.cambleplay;
       if (!fresh || fresh.done || fresh.sid !== sid) return;
       this.roll(true);
-    }, 760);
+    }, BOT_TIMING.cpRoll);
   },
 
   reset() {
