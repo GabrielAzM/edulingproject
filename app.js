@@ -128,6 +128,15 @@ function createPlayers(mode, total, baseName) {
   return players;
 }
 
+function applyStaticLabels() {
+  ["btn-home", "btn-game-home", "modal-feedback-home"].forEach((id) => {
+    const button = document.getElementById(id);
+    if (!button) return;
+    button.textContent = "Voltar ao início";
+    button.setAttribute("aria-label", "Voltar ao início");
+  });
+}
+
 function drawCycling(deck, source) {
   if (deck.length === 0) deck.push(...shuffle([...source]));
   return deck.shift();
@@ -3529,6 +3538,7 @@ async function init() {
     await loadData();
     setupExpressiveClickFX();
     mobileAssist.init();
+    applyStaticLabels();
     attachEvents();
     ui.screen("intro");
   } catch (err) {
