@@ -613,6 +613,11 @@ body::after {
   min-width: 0;
 }
 
+body[data-active-screen="intro"] .header-actions,
+body[data-active-screen="home"] .header-actions {
+  display: none;
+}
+
 body[data-active-screen="memoria"] .global-header,
 body[data-active-screen="domino"] .global-header,
 body[data-active-screen="uno"] .global-header,
@@ -3498,6 +3503,214 @@ button,
   line-height: 1.55;
 }
 
+.modal-endgame {
+  width: min(96vw, 1080px);
+}
+
+.modal-content.endgame-content {
+  max-height: min(72vh, 760px);
+  white-space: normal;
+}
+
+.endgame-report {
+  display: grid;
+  gap: 14px;
+}
+
+.endgame-hero {
+  background: linear-gradient(145deg, #ffffff, #eef9ff);
+  border: 3px solid #fff;
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding: 14px;
+}
+
+.endgame-hero p {
+  margin: 0;
+  color: var(--blue-dark);
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.endgame-summary-grid {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+}
+
+.endgame-summary-card,
+.endgame-highlight,
+.endgame-chart-panel,
+.endgame-ranking-panel {
+  background: #fff;
+  border: 3px solid #fff;
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+
+.endgame-summary-card {
+  padding: 9px 10px;
+}
+
+.endgame-summary-card span,
+.endgame-highlight span {
+  display: block;
+  color: #56718a;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.endgame-summary-card strong,
+.endgame-highlight strong {
+  display: block;
+  margin-top: 2px;
+  color: var(--blue-dark);
+  font-size: 1.02rem;
+}
+
+.endgame-feature-selection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: center;
+  color: #173449;
+  font-weight: 800;
+}
+
+.endgame-feature-selection div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.endgame-feature-selection span,
+.endgame-rank-values span {
+  border-radius: 999px;
+  background: #fdf2b0;
+  border: 2px solid #fff;
+  color: #4f3300;
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 4px 8px;
+}
+
+.endgame-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.9fr);
+  gap: 12px;
+  align-items: stretch;
+}
+
+.endgame-chart-panel,
+.endgame-ranking-panel {
+  min-width: 0;
+  padding: 12px;
+}
+
+.endgame-chart-panel h4,
+.endgame-ranking-panel h4,
+.endgame-highlights h4 {
+  margin: 0 0 10px;
+  color: var(--blue-dark);
+  font-size: 1rem;
+}
+
+.endgame-chart-wrap {
+  position: relative;
+  width: 100%;
+  height: clamp(240px, 36vh, 360px);
+}
+
+.endgame-chart-fallback {
+  margin: 10px 0 0;
+  color: #6b4f00;
+  font-weight: 700;
+}
+
+.endgame-ranking {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.endgame-rank-item {
+  border: 2px solid rgba(23, 52, 73, 0.12);
+  border-left: 8px solid var(--player-color, var(--blue));
+  border-radius: 12px;
+  padding: 9px;
+}
+
+.endgame-rank-topline {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.endgame-rank-topline strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.endgame-rank-pos {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  background: #eaf7ff;
+  color: var(--blue-dark);
+  font-weight: 900;
+}
+
+.endgame-rank-meter {
+  margin-top: 8px;
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e6f1f8;
+}
+
+.endgame-rank-meter span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--green), var(--blue));
+}
+
+.endgame-rank-values {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.endgame-highlights {
+  min-width: 0;
+}
+
+.endgame-highlight-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px;
+}
+
+.endgame-highlight {
+  padding: 10px;
+}
+
+.endgame-highlight em {
+  display: inline-block;
+  margin-top: 4px;
+  color: #4f3300;
+  font-style: normal;
+  font-weight: 800;
+}
+
 .modal-actions {
   margin-top: 16px;
   display: flex;
@@ -5224,6 +5437,14 @@ button,
     max-height: 48vh;
   }
 
+  .modal-content.endgame-content {
+    max-height: 58vh;
+  }
+
+  .endgame-chart-wrap {
+    height: 230px;
+  }
+
   .modal-game-config .config-grid {
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: 8px;
@@ -5231,6 +5452,27 @@ button,
 }
 
 @media (max-width: 700px) {
+  .modal-endgame {
+    width: min(96vw, 780px);
+  }
+
+  .modal-content.endgame-content {
+    max-height: 70vh;
+  }
+
+  .endgame-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .endgame-chart-wrap {
+    height: min(54vh, 340px);
+  }
+
+  .endgame-feature-selection {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
   .uno-number-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -5241,6 +5483,30 @@ button,
 }
 
 @media (max-width: 460px) {
+  .endgame-hero,
+  .endgame-chart-panel,
+  .endgame-ranking-panel {
+    padding: 10px;
+  }
+
+  .endgame-summary-grid,
+  .endgame-highlight-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .endgame-rank-topline {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .endgame-rank-topline > span:last-child {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
+  .endgame-chart-wrap {
+    height: 320px;
+  }
+
   .uno-number-grid {
     grid-template-columns: 1fr;
   }

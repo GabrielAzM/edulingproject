@@ -2,6 +2,7 @@ const state = {
   data: { memoria: null, domino: null, uno: null, cambleplay: null, ui: null },
   currentScreen: "intro",
   pendingFeedbackAction: null,
+  resultChart: null,
   timers: { memoria: null, cpCea: null, cpGuide: null, cpWalk: null, cpLanding: null },
   games: { memoria: null, domino: null, uno: null, cambleplay: null }
 };
@@ -503,6 +504,312 @@ mobileAssist.getSummary = function getSummary(screenName) {
   return "Toque para abrir";
 };
 
+const gamification = {
+  formatNumber(value, digits = 1) {
+    return new Intl.NumberFormat("pt-BR", {
+      maximumFractionDigits: digits
+    }).format(value);
+  },
+
+  featureValue(feature, player) {
+    const raw = typeof feature.value === "function" ? feature.value(player) : player[feature.key];
+    const value = Number(raw);
+    return Number.isFinite(value) ? value : 0;
+  },
+
+  formatFeature(feature, value) {
+    if (typeof feature.format === "function") return feature.format(value);
+    if (Number.isInteger(value)) return String(value);
+    return this.formatNumber(value, 1);
+  },
+
+  featureStats(players, feature) {
+    const values = players.map((player) => this.featureValue(feature, player));
+    const min = Math.min(...values);
+    const max = Math.max(...values);
+    const distinct = new Set(values.map((value) => value.toFixed(4))).size;
+    return {
+      min,
+      max,
+      range: max - min,
+      distinct
+    };
+  },
+
+  selectFeatures(players, features) {
+    const scored = features.map((feature, index) => {
+      const stats = this.featureStats(players, feature);
+      const priority = feature.priority ?? feature.weight ?? 1;
+      const score = (feature.primary ? 100 : 0) + priority * 8 + (stats.distinct > 1 ? 12 : 0) + stats.distinct;
+      return { ...feature, index, stats, selectionScore: score };
+    });
+
+    return scored
+      .sort((a, b) => b.selectionScore - a.selectionScore || a.index - b.index)
+      .slice(0, Math.min(4, Math.max(1, scored.length)));
+  },
+
+  normalizedValue(feature, value) {
+    const stats = feature.stats || { min: value, max: value, range: 0 };
+    if (!stats.range) return 1;
+    const ratio = feature.higherIsBetter === false ? (stats.max - value) / stats.range : (value - stats.min) / stats.range;
+    return clamp(ratio, 0, 1);
+  },
+
+  performanceFor(player, selectedFeatures) {
+    const totalWeight = selectedFeatures.reduce((sum, feature) => sum + (feature.weight ?? 1), 0) || 1;
+    const score = selectedFeatures.reduce((sum, feature) => {
+      const value = this.featureValue(feature, player);
+      return sum + this.normalizedValue(feature, value) * (feature.weight ?? 1);
+    }, 0);
+    return Math.round((score / totalWeight) * 100);
+  },
+
+  createReport({ gameName, message, players, features, summary = [] }) {
+    const selectedFeatures = this.selectFeatures(players, features);
+    const ranking = players
+      .map((player, index) => {
+        const values = selectedFeatures.map((feature) => {
+          const value = this.featureValue(feature, player);
+          return {
+            key: feature.key,
+            label: feature.label,
+            shortLabel: feature.shortLabel || feature.label,
+            value,
+            display: this.formatFeature(feature, value)
+          };
+        });
+        const primary = selectedFeatures[0];
+        return {
+          id: player.id || `player-${index}`,
+          name: player.name,
+          color: player.color || PLAYER_COLORS[index % PLAYER_COLORS.length],
+          isBot: Boolean(player.isBot),
+          performance: this.performanceFor(player, selectedFeatures),
+          primaryValue: primary ? this.featureValue(primary, player) : 0,
+          values
+        };
+      })
+      .sort((a, b) => {
+        if (b.performance !== a.performance) return b.performance - a.performance;
+        const primary = selectedFeatures[0];
+        if (!primary) return a.name.localeCompare(b.name);
+        return primary.higherIsBetter === false ? a.primaryValue - b.primaryValue : b.primaryValue - a.primaryValue;
+      });
+
+    return {
+      gameName,
+      message,
+      summary,
+      selectedFeatures,
+      ranking,
+      highlights: this.buildHighlights(ranking, selectedFeatures)
+    };
+  },
+
+  buildHighlights(ranking, selectedFeatures) {
+    const highlights = [];
+    const topPerformance = ranking[0]?.performance ?? 0;
+    const topPlayers = ranking.filter((row) => row.performance === topPerformance).map((row) => row.name);
+
+    if (topPlayers.length) {
+      highlights.push({
+        label: "Melhor desempenho geral",
+        names: topPlayers.join(", "),
+        value: `${topPerformance}%`,
+        detail: "Combinação dos critérios selecionados."
+      });
+    }
+
+    selectedFeatures.forEach((feature) => {
+      const values = ranking.map((row) => ({
+        row,
+        value: row.values.find((item) => item.key === feature.key)?.value ?? 0
+      }));
+      const bestValue =
+        feature.higherIsBetter === false
+          ? Math.min(...values.map((item) => item.value))
+          : Math.max(...values.map((item) => item.value));
+      const winners = values
+        .filter((item) => Math.abs(item.value - bestValue) < 0.0001)
+        .map((item) => item.row.name);
+      highlights.push({
+        label: feature.highlightLabel || feature.label,
+        names: winners.join(", "),
+        value: this.formatFeature(feature, bestValue),
+        detail: feature.higherIsBetter === false ? "Menor valor entre os jogadores." : "Maior valor entre os jogadores."
+      });
+    });
+
+    return highlights.slice(0, 5);
+  },
+
+  renderReport(report) {
+    const summary = report.summary.length
+      ? `
+        <div class="endgame-summary-grid">
+          ${report.summary
+            .map(
+              (item) => `
+                <article class="endgame-summary-card">
+                  <span>${escapeHtml(item.label)}</span>
+                  <strong>${escapeHtml(item.value)}</strong>
+                </article>
+              `
+            )
+            .join("")}
+        </div>
+      `
+      : "";
+
+    const featureChips = report.selectedFeatures
+      .map((feature) => `<span>${escapeHtml(feature.shortLabel || feature.label)}</span>`)
+      .join("");
+
+    return `
+      <section class="endgame-report" aria-label="Resultado gamificado de ${escapeAttr(report.gameName)}">
+        <div class="endgame-hero">
+          <p>${escapeHtml(report.message)}</p>
+          ${summary}
+        </div>
+
+        <div class="endgame-feature-selection">
+          <strong>Melhores resultados selecionados</strong>
+          <div>${featureChips}</div>
+        </div>
+
+        <div class="endgame-layout">
+          <section class="endgame-chart-panel" aria-labelledby="endgame-chart-title">
+            <h4 id="endgame-chart-title">Comparativo final</h4>
+            <div class="endgame-chart-wrap">
+              <canvas id="endgame-chart" aria-label="Gráfico de desempenho final dos jogadores"></canvas>
+            </div>
+            <p id="endgame-chart-fallback" class="endgame-chart-fallback" hidden></p>
+          </section>
+
+          <section class="endgame-ranking-panel" aria-labelledby="endgame-ranking-title">
+            <h4 id="endgame-ranking-title">Ranking</h4>
+            <ol class="endgame-ranking">
+              ${report.ranking
+                .map(
+                  (row, index) => `
+                    <li class="endgame-rank-item" style="--player-color:${escapeAttr(row.color)}">
+                      <div class="endgame-rank-topline">
+                        <span class="endgame-rank-pos">${index + 1}º</span>
+                        <strong>${escapeHtml(row.name)}</strong>
+                        <span>${row.performance}%</span>
+                      </div>
+                      <div class="endgame-rank-meter" aria-hidden="true">
+                        <span style="width:${clamp(row.performance, 0, 100)}%"></span>
+                      </div>
+                      <div class="endgame-rank-values">
+                        ${row.values
+                          .map((item) => `<span>${escapeHtml(item.shortLabel)}: ${escapeHtml(item.display)}</span>`)
+                          .join("")}
+                      </div>
+                    </li>
+                  `
+                )
+                .join("")}
+            </ol>
+          </section>
+        </div>
+
+        <section class="endgame-highlights" aria-labelledby="endgame-highlights-title">
+          <h4 id="endgame-highlights-title">Destaques da partida</h4>
+          <div class="endgame-highlight-grid">
+            ${report.highlights
+              .map(
+                (item) => `
+                  <article class="endgame-highlight">
+                    <span>${escapeHtml(item.label)}</span>
+                    <strong>${escapeHtml(item.names)}</strong>
+                    <em>${escapeHtml(item.value)}</em>
+                  </article>
+                `
+              )
+              .join("")}
+          </div>
+        </section>
+      </section>
+    `;
+  },
+
+  renderChart(report) {
+    this.destroyChart();
+    const canvas = document.getElementById("endgame-chart");
+    const fallback = document.getElementById("endgame-chart-fallback");
+    if (!canvas) return;
+
+    if (typeof Chart === "undefined") {
+      if (fallback) {
+        fallback.hidden = false;
+        fallback.textContent = "O Chart.js não foi carregado. O ranking acima continua disponível.";
+      }
+      return;
+    }
+
+    const compact = window.matchMedia("(max-width: 520px)").matches;
+    const valueScale = compact ? "x" : "y";
+    const categoryScale = compact ? "y" : "x";
+
+    state.resultChart = new Chart(canvas, {
+      type: "bar",
+      data: {
+        labels: report.ranking.map((row) => row.name),
+        datasets: [
+          {
+            label: "Desempenho final",
+            data: report.ranking.map((row) => row.performance),
+            backgroundColor: report.ranking.map((row) => row.color),
+            borderColor: "#173449",
+            borderWidth: 2,
+            borderRadius: 12
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        resizeDelay: 80,
+        indexAxis: compact ? "y" : "x",
+        scales: {
+          [valueScale]: {
+            beginAtZero: true,
+            suggestedMax: 100,
+            max: 100,
+            grid: { color: "rgba(23, 52, 73, 0.12)" },
+            ticks: {
+              callback: (value) => `${value}%`
+            }
+          },
+          [categoryScale]: {
+            grid: { display: false }
+          }
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              afterLabel: (context) => {
+                const row = report.ranking[context.dataIndex];
+                return row.values.map((item) => `${item.shortLabel}: ${item.display}`);
+              }
+            }
+          }
+        }
+      }
+    });
+  },
+
+  destroyChart() {
+    if (state.resultChart) {
+      state.resultChart.destroy();
+      state.resultChart = null;
+    }
+  }
+};
+
 const ui = {
   screen(screenName) {
     document.querySelectorAll(".screen").forEach((el) => {
@@ -558,11 +865,21 @@ const ui = {
     box.prepend(p);
   },
 
-  feedback(title, text, onContinue) {
+  feedback(title, text, onContinue, report = null) {
+    gamification.destroyChart();
     state.pendingFeedbackAction = typeof onContinue === "function" ? onContinue : null;
+    const modal = document.getElementById("modal-feedback");
+    const content = document.getElementById("modal-feedback-texto");
     document.getElementById("modal-feedback-titulo").textContent = title;
-    document.getElementById("modal-feedback-texto").textContent = text;
-    document.getElementById("modal-feedback").showModal();
+    modal.classList.toggle("modal-endgame", Boolean(report));
+    content.className = report ? "modal-content endgame-content" : "modal-content";
+    if (report) {
+      content.innerHTML = gamification.renderReport(report);
+    } else {
+      content.textContent = text;
+    }
+    modal.showModal();
+    if (report) requestAnimationFrame(() => gamification.renderChart(report));
   },
 
   confetti() {
@@ -767,7 +1084,31 @@ const memoryGame = {
         : `${winners[0].name} venceu com ${top} pares.`;
     ui.text("memoria-msg", msg);
     ui.confetti();
-    ui.feedback("Fim da partida - Memória Camble", msg, () => this.start());
+    const elapsedSeconds = Math.floor((Date.now() - g.startedAt) / 1000);
+    const report = gamification.createReport({
+      gameName: "Memória Camble",
+      message: msg,
+      players: g.players,
+      summary: [
+        { label: "Pares do baralho", value: pluralize(g.cards.length / 2, "par", "pares") },
+        { label: "Movimentos", value: String(g.moves) },
+        { label: "Tempo", value: formatTime(elapsedSeconds) }
+      ],
+      features: [
+        {
+          key: "score",
+          label: "Pares encontrados",
+          shortLabel: "Pares",
+          highlightLabel: "Mais pares encontrados",
+          higherIsBetter: true,
+          primary: true,
+          weight: 3,
+          value: (player) => player.score,
+          format: (value) => pluralize(value, "par", "pares")
+        }
+      ]
+    });
+    ui.feedback("Fim da partida - Memória Camble", msg, () => this.start(), report);
     return true;
   },
 
@@ -1361,6 +1702,63 @@ const dominoGame = {
     this.playFromHand(chosen.index, chosen.side);
   },
 
+  createEndReport(message) {
+    const g = state.games.domino;
+    return gamification.createReport({
+      gameName: "Dominó Camble",
+      message,
+      players: g.players,
+      summary: [
+        { label: "Peças na mesa", value: String(g.chain.length) },
+        { label: "Monte final", value: pluralize(g.pile.length, "peça") },
+        { label: "Jogadores", value: String(g.players.length) }
+      ],
+      features: [
+        {
+          key: "remaining",
+          label: "Peças na mão",
+          shortLabel: "Mão",
+          highlightLabel: "Menor mão final",
+          higherIsBetter: false,
+          primary: true,
+          weight: 3,
+          value: (player) => player.hand.length,
+          format: (value) => pluralize(value, "peça")
+        },
+        {
+          key: "score",
+          label: "Pontos de encaixe",
+          shortLabel: "Pontos",
+          highlightLabel: "Mais pontos de encaixe",
+          higherIsBetter: true,
+          weight: 2,
+          value: (player) => player.score,
+          format: (value) => pluralize(value, "ponto")
+        },
+        {
+          key: "buys",
+          label: "Compras",
+          shortLabel: "Compras",
+          highlightLabel: "Menos compras",
+          higherIsBetter: false,
+          weight: 1,
+          value: (player) => player.buys,
+          format: (value) => pluralize(value, "compra")
+        },
+        {
+          key: "passes",
+          label: "Passes",
+          shortLabel: "Passes",
+          highlightLabel: "Menos passes",
+          higherIsBetter: false,
+          weight: 1,
+          value: (player) => player.passes,
+          format: (value) => pluralize(value, "passe")
+        }
+      ]
+    });
+  },
+
   finishIfWinner(player) {
     const g = state.games.domino;
     if (!g || player.hand.length > 0) return false;
@@ -1370,7 +1768,7 @@ const dominoGame = {
     ui.log("domino-log", msg);
     ui.text("domino-msg", msg);
     ui.confetti();
-    ui.feedback("Fim da partida - Dominó", msg, () => this.start());
+    ui.feedback("Fim da partida - Dominó", msg, () => this.start(), this.createEndReport(msg));
     return true;
   },
 
@@ -1390,7 +1788,7 @@ const dominoGame = {
 
     ui.log("domino-log", msg);
     ui.text("domino-msg", msg);
-    ui.feedback("Fim da partida - Dominó", msg, () => this.start());
+    ui.feedback("Fim da partida - Dominó", msg, () => this.start(), this.createEndReport(msg));
   },
 
   reset() {
@@ -1891,8 +2289,65 @@ const unoGame = {
       winners.length > 1
         ? `Empate entre ${winners.map((w) => w.name).join(", ")} com ${pluralize(top, "ponto")}.`
         : `${winners[0].name} venceu com ${pluralize(top, "ponto")}!`;
+    const playerStats = new Map(
+      g.players.map((player) => {
+        const entries = g.sheet.map((record) => record.players[player.id]).filter(Boolean);
+        const diffs = entries.map((entry) => Number(entry.diff)).filter(Number.isFinite);
+        const avgDiff = diffs.length ? diffs.reduce((sum, diff) => sum + diff, 0) / diffs.length : 0;
+        return [
+          player.id,
+          {
+            avgDiff,
+            exactRounds: diffs.filter((diff) => diff === 0).length
+          }
+        ];
+      })
+    );
+    const report = gamification.createReport({
+      gameName: "UNO Camble",
+      message: msg,
+      players: g.players,
+      summary: [
+        { label: "Rodadas", value: String(g.totalRounds) },
+        { label: "Jogadores", value: String(g.players.length) },
+        { label: "Maior pontuação", value: pluralize(top, "ponto") }
+      ],
+      features: [
+        {
+          key: "points",
+          label: "Pontos finais",
+          shortLabel: "Pontos",
+          highlightLabel: "Mais rodadas vencidas",
+          higherIsBetter: true,
+          primary: true,
+          weight: 3,
+          value: (player) => player.points,
+          format: (value) => pluralize(value, "ponto")
+        },
+        {
+          key: "avgDiff",
+          label: "Distância média",
+          shortLabel: "Média",
+          highlightLabel: "Menor distância média",
+          higherIsBetter: false,
+          weight: 2,
+          value: (player) => playerStats.get(player.id)?.avgDiff ?? 0,
+          format: (value) => gamification.formatNumber(value, 1)
+        },
+        {
+          key: "exactRounds",
+          label: "Acertos exatos",
+          shortLabel: "Exatos",
+          highlightLabel: "Mais números exatos",
+          higherIsBetter: true,
+          weight: 1,
+          value: (player) => playerStats.get(player.id)?.exactRounds ?? 0,
+          format: (value) => pluralize(value, "acerto")
+        }
+      ]
+    });
     ui.confetti();
-    ui.feedback("Fim da partida - UNO", msg, () => this.start());
+    ui.feedback("Fim da partida - UNO", msg, () => this.start(), report);
     document.getElementById("uno-jogada").innerHTML = `
       <h3>Partida encerrada</h3>
       <p>${escapeHtml(msg)}</p>
@@ -2032,23 +2487,23 @@ const cambleplayGame = {
     let tone = "progress";
     let icon = "🎯";
     let title = `Vez de ${current.name}`;
-    let text = `Faltam ${pluralize(pecasRestantes, "peça")} e ${pluralize(casasRestantes, "casa")} para vencer.`;
+    let text = `Faltam ${pluralize(pecasRestantes, "peça")} para vencer. Casa atual: ${current.pos}/${g.board.length - 1}.`;
 
     if (g.done) {
       tone = "success";
       icon = "🏆";
       title = "Partida encerrada";
-      text = `${current.name} concluiu o objetivo final do tabuleiro.`;
+      text = `${current.name} completou a meta de peças.`;
     } else if (casasRestantes === 0 && pecasRestantes > 0) {
       tone = "warning";
       icon = "🏰";
       title = "Chegada alcançada";
-      text = `${current.name} já chegou ao castelo, mas ainda precisa de ${pluralize(pecasRestantes, "peça")}.`;
-    } else if (pecasRestantes === 0 && casasRestantes > 0) {
+      text = `${current.name} chegou ao fim do percurso, mas ainda precisa de ${pluralize(pecasRestantes, "peça")}. Na próxima jogada volta ao início.`;
+    } else if (pecasRestantes === 0) {
       tone = "ready";
       icon = "🧩";
       title = "Meta de peças concluída";
-      text = `${current.name} já tem peças suficientes. Agora faltam ${pluralize(casasRestantes, "casa")}.`;
+      text = `${current.name} completou a meta de peças.`;
     }
 
     box.className = `cp-status-hero tone-${tone}`;
@@ -2137,8 +2592,8 @@ const cambleplayGame = {
         title: "Chegada",
         text:
           pecasRestantes > 0
-            ? `Você chegou ao castelo, mas ainda precisa de ${pluralize(pecasRestantes, "peça")} para vencer.`
-            : "Você chegou ao castelo com peças suficientes para disputar a vitória.",
+            ? `Você chegou ao fim do percurso, mas ainda precisa de ${pluralize(pecasRestantes, "peça")} para vencer. Depois desta jogada, volte ao início para continuar coletando.`
+            : "Você completou a meta de peças e pode vencer a partida.",
         tone: pecasRestantes > 0 ? "warning" : "success"
       }
     };
@@ -2232,10 +2687,10 @@ const cambleplayGame = {
     const casasRestantes = Math.max(0, g.board.length - 1 - player.pos);
     const textBase = feedback.text ? `${feedback.text} ` : "";
 
-    if (casasRestantes === 0 && pecasRestantes === 0) {
+    if (pecasRestantes === 0) {
       return {
-        title: "Condição de vitória atingida",
-        text: `${textBase}${player.name} chegou ao castelo com peças suficientes.`,
+        title: "Meta de peças atingida",
+        text: `${textBase}${player.name} completou a meta de peças.`,
         tone: "success",
         buttonLabel: "Finalizar partida"
       };
@@ -2244,17 +2699,9 @@ const cambleplayGame = {
     if (casasRestantes === 0 && pecasRestantes > 0) {
       return {
         title: "Chegada alcançada",
-        text: `${textBase}Ainda faltam ${pluralize(pecasRestantes, "peça")} para vencer.`,
+        text: `${textBase}Ainda faltam ${pluralize(pecasRestantes, "peça")} para vencer. Volte ao início para continuar coletando.`,
         tone: "warning",
-        buttonLabel: "Passar a vez"
-      };
-    }
-
-    if (pecasRestantes === 0 && casasRestantes > 0) {
-      return {
-        ...feedback,
-        tone: feedback.tone === "danger" ? "danger" : "success",
-        text: `${textBase}Meta de peças completa. Faltam ${pluralize(casasRestantes, "casa")}.`
+        buttonLabel: "Voltar ao início"
       };
     }
 
@@ -2350,6 +2797,12 @@ const cambleplayGame = {
     if (player.isBot !== forcedBot) return;
     g.waiting = true;
 
+    if (player.pos >= g.board.length - 1 && player.pieces < g.meta) {
+      player.pos = 0;
+      this.render();
+      ui.log("cp-log", `${player.name} voltou ao início para continuar coletando peças.`);
+    }
+
     const dice = randInt(1, 6);
     const targetPos = Math.min(g.board.length - 1, player.pos + dice);
     ui.text("cp-dado", String(dice));
@@ -2389,15 +2842,21 @@ const cambleplayGame = {
 
     if (code === "INICIO" || code === "CHEGADA") {
       if (code === "CHEGADA") {
+        const needsMorePieces = player.pieces < g.meta;
         this.showTurnFeedback(
           player,
           {
-            title: "Casa final alcançada",
-            text: "Você terminou o percurso desta rodada.",
-            tone: "info",
-            buttonLabel: "Conferir resultado"
+            title: needsMorePieces ? "Chegada alcançada" : "Meta de peças completa",
+            text: needsMorePieces
+              ? `Você chegou ao fim do percurso, mas ainda precisa de ${pluralize(g.meta - player.pieces, "peça")}. Volte ao início para continuar coletando.`
+              : "Você completou a meta de peças.",
+            tone: needsMorePieces ? "warning" : "success",
+            buttonLabel: needsMorePieces ? "Voltar ao início" : "Conferir resultado"
           },
-          finishTurn
+          () => {
+            if (needsMorePieces) player.pos = 0;
+            finishTurn();
+          }
         );
         return;
       }
@@ -2746,15 +3205,76 @@ const cambleplayGame = {
   checkEnd(player) {
     const g = state.games.cambleplay;
     if (!g) return false;
-    if (player.pieces < g.meta) return false;
-    if (player.pos < g.board.length - 1) return false;
+    const contenders = g.players.filter((p) => p.pieces >= g.meta);
+    if (!contenders.length) return false;
+
+    const winners = [...contenders].sort((a, b) => b.pieces - a.pieces || b.pos - a.pos);
+    const topPieces = winners[0].pieces;
+    const tiedWinners = winners.filter((p) => p.pieces === topPieces);
     g.done = true;
     this.stopCeaTimer();
     this.stopWalkTimers();
-    const msg = `${player.name} venceu com ${pluralize(player.pieces, "peça")} e chegou ao castelo!`;
+    const msg =
+      tiedWinners.length > 1
+        ? `Empate entre ${tiedWinners.map((p) => p.name).join(", ")} com ${pluralize(topPieces, "peça")}!`
+        : `${tiedWinners[0].name} venceu ao completar ${pluralize(topPieces, "peça")}!`;
     ui.log("cp-log", msg);
     ui.confetti();
-    ui.feedback("Fim da partida - Cambleplay", msg, () => this.start());
+    const lastCell = Math.max(1, g.board.length - 1);
+    const report = gamification.createReport({
+      gameName: "Cambleplay",
+      message: msg,
+      players: g.players,
+      summary: [
+        { label: "Meta de peças", value: String(g.meta) },
+        { label: "Casas do percurso", value: String(lastCell) },
+        { label: "Jogadores", value: String(g.players.length) }
+      ],
+      features: [
+        {
+          key: "pieces",
+          label: "Peças coletadas",
+          shortLabel: "Peças",
+          highlightLabel: "Mais peças coletadas",
+          higherIsBetter: true,
+          primary: true,
+          weight: 4,
+          value: (p) => p.pieces,
+          format: (value) => pluralize(value, "peça")
+        },
+        {
+          key: "pieceProgress",
+          label: "Progresso de peças",
+          shortLabel: "Meta",
+          highlightLabel: "Maior progresso de peças",
+          higherIsBetter: true,
+          weight: 3,
+          value: (p) => (Math.min(p.pieces, g.meta) / g.meta) * 100,
+          format: (value) => `${gamification.formatNumber(value, 0)}%`
+        },
+        {
+          key: "position",
+          label: "Casa alcançada",
+          shortLabel: "Casa",
+          highlightLabel: "Casa mais avançada",
+          higherIsBetter: true,
+          weight: 2,
+          value: (p) => p.pos,
+          format: (value) => `${value}/${lastCell}`
+        },
+        {
+          key: "piecesMissing",
+          label: "Peças faltantes",
+          shortLabel: "Faltam",
+          highlightLabel: "Menos peças faltantes",
+          higherIsBetter: false,
+          weight: 1,
+          value: (p) => Math.max(0, g.meta - p.pieces),
+          format: (value) => pluralize(value, "peça")
+        }
+      ]
+    });
+    ui.feedback("Fim da partida - Cambleplay", msg, () => this.start(), report);
     return true;
   },
 
@@ -2883,6 +3403,7 @@ function attachEvents() {
   });
 
   document.getElementById("modal-feedback-ok").addEventListener("click", () => {
+    gamification.destroyChart();
     document.getElementById("modal-feedback").close();
     if (state.pendingFeedbackAction) {
       const fn = state.pendingFeedbackAction;
@@ -2891,6 +3412,7 @@ function attachEvents() {
     }
   });
   document.getElementById("modal-feedback-home").addEventListener("click", () => {
+    gamification.destroyChart();
     document.getElementById("modal-feedback").close();
     state.pendingFeedbackAction = null;
     resetAllGames();
