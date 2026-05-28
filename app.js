@@ -132,8 +132,8 @@ function applyStaticLabels() {
   ["btn-home", "btn-game-home", "modal-feedback-home"].forEach((id) => {
     const button = document.getElementById(id);
     if (!button) return;
-    button.textContent = "Voltar ao início";
-    button.setAttribute("aria-label", "Voltar ao início");
+    button.textContent = "Retornar aos jogos";
+    button.setAttribute("aria-label", "Retornar aos jogos");
   });
 }
 
@@ -3458,7 +3458,7 @@ function attachEvents() {
   });
   document.getElementById("btn-game-home").addEventListener("click", () => {
     resetAllGames();
-    ui.screen("intro");
+    ui.screen("home");
   });
   document.getElementById("btn-game-config").addEventListener("click", () => {
     const dialogId = getActiveConfigDialogId();
@@ -3503,7 +3503,7 @@ function attachEvents() {
     document.getElementById("modal-feedback").close();
     state.pendingFeedbackAction = null;
     resetAllGames();
-    ui.screen("intro");
+    ui.screen("home");
   });
 
   const dominoPassModal = document.getElementById("modal-domino-pass");
